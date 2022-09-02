@@ -2,7 +2,7 @@ import { FormControl, Input, WarningOutlineIcon, Pressable, Icon } from 'native-
 import { MaterialIcons } from '@expo/vector-icons'
 import { useState } from 'react'
 
-const FormInputPassword = ({ value }) => {
+const FormInputPassword = ({ value, setValue }) => {
   const [showPassword, setShowPassword] = useState(false)
   return (
     <FormControl>
@@ -10,6 +10,7 @@ const FormInputPassword = ({ value }) => {
       <Input
         type={showPassword ? 'text' : 'password'}
         value={value}
+        onChangeText={setValue}
         InputRightElement={
           <Pressable onPress={() => setShowPassword(!showPassword)}>
             <Icon
