@@ -14,11 +14,13 @@ import { combineReducers } from '@reduxjs/toolkit'
 import signUpReducer from './slices/signUpSlice'
 import signInReducer from './slices/signInSlice'
 import tokensReducer from './slices/tokensSlice'
+import projectsReducer from './slices/projectsSlice'
 
 const reducers = combineReducers({
   signUp: signUpReducer,
   signIn: signInReducer,
   tokens: tokensReducer,
+  projects: projectsReducer,
 })
 
 const persistConfig = {

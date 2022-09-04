@@ -2,6 +2,39 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axiosInstance from '../../api/axios'
 import { setAccessToken, setRefreshToken } from './tokensSlice'
 
+export const handleSignIn = createAsyncThunk(
+  'signIn/handleSignIn',
+  async ({ email, password }, { dispatch }) => {
+    try {
+      const answer = await axiosInstance.post('/login', {
+        email,
+        password,
+      })
+      if (answer.data.access_token) {
+        dispatch(setAccessToken(answer.data.access_token))
+        dispatch(setRefreshToken(answer.data.refresh_token))
+      }
+      console.log('handleSignIn', answer.data)
+    } catch (error) {
+      console.log('error signIn/handleSignIn')
+      console.log(error.response.data)
+    }
+  }
+)
+
+export const handleLogOut = createAsyncThunk(
+  'signIn/handleLogOut',
+  async (_, { dispatch }) => {
+    try {
+      dispatch(setAccessToken(null))
+      dispatch(setRefreshToken(null))
+    } catch (error) {
+      console.log('error signIn/handleLogOut')
+      console.log(error)
+    }
+  }
+)
+
 const initialState = {
   email: '',
   password: '',
@@ -19,37 +52,6 @@ const signInSlice = createSlice({
     },
   },
 })
-
-export const handleSignIn = createAsyncThunk(
-  'signIn/handleSignIn',
-  async ({ email, password }, { dispatch }) => {
-    try {
-      const answer = await axiosInstance.post('/login', {
-        email,
-        password,
-      })
-      if (answer.data.access_token) {
-        dispatch(setAccessToken(answer.data.access_token))
-        dispatch(setRefreshToken(answer.data.refresh_token))
-      }
-      console.log('handleSignIn', answer.data)
-    } catch (error) {
-      console.log('error handleSignIn', error.response.data)
-    }
-  }
-)
-
-export const handleLogOut = createAsyncThunk(
-  'signIn/handleLogOut',
-  async (_, { dispatch }) => {
-    try {
-      dispatch(setAccessToken(null))
-      dispatch(setRefreshToken(null))
-    } catch (error) {
-      console.log(error)
-    }
-  }
-)
 
 export const { setEmail, setPassword } = signInSlice.actions
 
