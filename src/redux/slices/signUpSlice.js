@@ -1,4 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import axiosInstance from '../../api/axios'
 
 const initialState = {
   username: '',
@@ -21,6 +22,24 @@ const signUpSlice = createSlice({
     },
   },
 })
+
+export const handleSignUp = createAsyncThunk(
+  'singUp/handlerSignUp',
+  async ({ username, email, password }) => {
+    try {
+      const answer = await axiosInstance.post('/registration', {
+        username,
+        email,
+        password,
+      })
+      console.log('handleSignUp good')
+      console.log(answer)
+    } catch (error) {
+      console.log('handleSignUp error')
+      console.log(error.response)
+    }
+  }
+)
 
 export const { setUsername, setEmail, setPassword } = signUpSlice.actions
 

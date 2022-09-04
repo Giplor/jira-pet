@@ -1,16 +1,20 @@
 import axios from 'axios'
-import { useSelector } from 'react-redux'
 
-export const axiosInstance = axios.create({
+let store
+
+export const injectStore = (_store) => {
+  store = _store
+}
+const axiosInstance = axios.create({
   baseURL: 'https://jirapet-python.herokuapp.com/api',
   timeout: 10000,
 })
 
 axiosInstance.interceptors.request.use(
   async (config) => {
-    const token = useSelector((state) => state.tokens.accessToken)
+    const token = store.getState()?.tokens?.accessToken
     if (token) {
-      config.headers['Authorization'] = 'Bearer' + token
+      config.headers['Authorization'] = 'Bearer ' + token
     }
     return config
   },
@@ -18,3 +22,5 @@ axiosInstance.interceptors.request.use(
     Promise.reject(error)
   }
 )
+
+export default axiosInstance

@@ -1,19 +1,26 @@
 import React from 'react'
+import { persistor, store } from './src/redux/store'
 import { Provider } from 'react-redux'
-import { store } from './src/redux/store'
+import { PersistGate } from 'redux-persist/integration/react'
 import { NativeBaseProvider } from 'native-base'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
-import SignUpScreen from './src/screens/AuthScreens/SignUpScreen'
-import SignInScreen from './src/screens/AuthScreens/SignInScreen'
+import { NavigationContainer } from '@react-navigation/native'
+import GeneralRoute from './src/route/GeneralRoute'
+import { injectStore } from './src/api/axios'
+injectStore(store)
 
 export default function App() {
   return (
     <Provider store={store}>
-      <NativeBaseProvider>
-        <SafeAreaProvider>
-          <SignInScreen />
-        </SafeAreaProvider>
-      </NativeBaseProvider>
+      <PersistGate persistor={persistor}>
+        <NativeBaseProvider>
+          <SafeAreaProvider>
+            <NavigationContainer>
+              <GeneralRoute />
+            </NavigationContainer>
+          </SafeAreaProvider>
+        </NativeBaseProvider>
+      </PersistGate>
     </Provider>
   )
 }
