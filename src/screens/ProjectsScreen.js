@@ -1,4 +1,4 @@
-import { Box, Button, KeyboardAvoidingView } from 'native-base'
+import { Box, Button } from 'native-base'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { handleLogOut } from '../redux/slices/signInSlice'
@@ -21,7 +21,7 @@ const ProjectsScreen = () => {
       <Button onPress={() => dispatch(handleLogOut())}>Log out</Button>
       <ProjectsList projects={projects} />
       <ModalCreateProject show={showModal} setShow={setShowModal} />
-      <Button onPress={() => setShowModal(true)}>show modal</Button>
+      <Button onPress={() => setShowModal(true)}>create new project</Button>
     </Box>
   )
 }

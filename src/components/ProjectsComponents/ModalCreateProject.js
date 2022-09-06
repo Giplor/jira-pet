@@ -1,7 +1,7 @@
 import { Modal, Input, FormControl, VStack, Button } from 'native-base'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { createProject } from '../../redux/slices/projectsSlice'
+import { createNewProject } from '../../redux/slices/projectsSlice'
 
 const ModalCreateProject = ({ show, setShow }) => {
   const [title, setTitle] = useState('')
@@ -9,7 +9,7 @@ const ModalCreateProject = ({ show, setShow }) => {
   const dispatch = useDispatch()
 
   const addProject = () => {
-    dispatch(createProject({ title, description }))
+    dispatch(createNewProject({ title, description }))
     setShow(false)
   }
 

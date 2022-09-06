@@ -14,8 +14,8 @@ export const fetchProjects = createAsyncThunk(
   }
 )
 
-export const createProject = createAsyncThunk(
-  'projects/createProjects',
+export const createNewProject = createAsyncThunk(
+  'projects/createProject',
   async ({ title, description }, { dispatch }) => {
     try {
       const answer = await axiosInstance.post('/projects', {
@@ -26,6 +26,20 @@ export const createProject = createAsyncThunk(
       console.log(answer.data)
     } catch (error) {
       console.log('error projects/createProjects')
+      console.log(error.response)
+    }
+  }
+)
+
+export const deleteProject = createAsyncThunk(
+  'projects/deleteProject',
+  async (id, { dispatch }) => {
+    try {
+      const answer = await axiosInstance.delete(`/projects/${id}`)
+      dispatch(fetchProjects())
+      console.log(answer.data)
+    } catch (error) {
+      console.log('error projects/deleteProject')
       console.log(error.response)
     }
   }

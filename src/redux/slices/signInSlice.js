@@ -14,7 +14,6 @@ export const handleSignIn = createAsyncThunk(
         dispatch(setAccessToken(answer.data.access_token))
         dispatch(setRefreshToken(answer.data.refresh_token))
       }
-      console.log('handleSignIn', answer.data)
     } catch (error) {
       console.log('error signIn/handleSignIn')
       console.log(error.response.data)

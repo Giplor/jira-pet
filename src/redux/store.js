@@ -15,12 +15,14 @@ import signUpReducer from './slices/signUpSlice'
 import signInReducer from './slices/signInSlice'
 import tokensReducer from './slices/tokensSlice'
 import projectsReducer from './slices/projectsSlice'
+import tasksReducer from './slices/tasksSlice'
 
 const reducers = combineReducers({
   signUp: signUpReducer,
   signIn: signInReducer,
   tokens: tokensReducer,
   projects: projectsReducer,
+  tasks: tasksReducer,
 })
 
 const persistConfig = {
