@@ -1,9 +1,10 @@
 import { Box, Text } from 'native-base'
+import TasksList from '../components/TasksComponents/TasksList'
 
 const TasksScreen = () => {
   return (
     <Box>
-      <Text>TasksScreen</Text>
+      <TasksList />
     </Box>
   )
 }

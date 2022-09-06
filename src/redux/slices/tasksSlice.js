@@ -2,13 +2,12 @@ import { createAsyncThunk, createSlice, current } from '@reduxjs/toolkit'
 import axiosInstance from '../../api/axios'
 
 export const fetchTasks = createAsyncThunk(
-  'taksks/fetchTasks',
+  'tasks/fetchTasks',
   async (_, { dispatch, getState }) => {
     try {
-      const projectId = getState().tasks.projectId
+      const projectId = await getState().tasks.projectId
       const answer = await axiosInstance.get(`projects/${projectId}/tasks`)
-      dispatch(setTasks(answer.data))
-      console.log(answer.data)
+      dispatch(setTasks(answer.data.tasks))
     } catch (error) {
       console.log('error taksks/fetchTasks')
       console.log(error.response)
