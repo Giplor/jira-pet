@@ -1,4 +1,4 @@
-import { Box, Button, FlatList } from 'native-base'
+import { Box, FlatList } from 'native-base'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchProjects } from '../../redux/slices/projectsSlice'
@@ -25,7 +25,6 @@ const ProjectsList = () => {
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
       />
-      <Button onPress={() => navigation.navigate('Users')}>go to users</Button>
     </Box>
   )
 }
