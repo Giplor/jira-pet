@@ -1,4 +1,4 @@
-import { Box, Button } from 'native-base'
+import { Box, Button, Center } from 'native-base'
 import { useState } from 'react'
 import { handleLogOut } from '../redux/slices/signInSlice'
 import { useDispatch } from 'react-redux'
@@ -10,12 +10,14 @@ const ProjectsScreen = () => {
   const dispatch = useDispatch()
 
   return (
-    <Box safeArea>
-      <Button onPress={() => dispatch(handleLogOut())}>Log out</Button>
-      <ProjectsList />
-      <ModalCreateProject show={showModal} setShow={setShowModal} />
-      <Button onPress={() => setShowModal(true)}>create new project</Button>
-    </Box>
+    <Center>
+      <Box width='100%' safeArea>
+        <Button onPress={() => dispatch(handleLogOut())}>Log out</Button>
+        <ProjectsList />
+        <ModalCreateProject show={showModal} setShow={setShowModal} />
+        <Button onPress={() => setShowModal(true)}>create new project</Button>
+      </Box>
+    </Center>
   )
 }
 

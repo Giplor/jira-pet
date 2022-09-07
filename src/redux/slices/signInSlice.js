@@ -4,8 +4,10 @@ import { setAccessToken, setRefreshToken } from './tokensSlice'
 
 export const handleSignIn = createAsyncThunk(
   'signIn/handleSignIn',
-  async ({ email, password }, { dispatch }) => {
+  async (_, { dispatch, getState }) => {
     try {
+      const email = getState().signIn.email
+      const password = getState().signIn.password
       const answer = await axiosInstance.post('/login', {
         email,
         password,

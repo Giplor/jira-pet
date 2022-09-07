@@ -1,15 +1,16 @@
-import { Modal, Input, FormControl, VStack, Button, Center } from 'native-base'
+import { Button, FormControl, Input, Modal, VStack } from 'native-base'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { createNewProject } from '../../redux/slices/projectsSlice'
+import { createNewTask } from '../../redux/slices/tasksSlice'
 
-const ModalCreateProject = ({ show, setShow }) => {
+const ModalCreateTask = ({ show, setShow }) => {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
+  const [user, setUser] = useState('')
   const dispatch = useDispatch()
 
-  const addProject = () => {
-    dispatch(createNewProject({ title, description }))
+  const addTask = () => {
+    dispatch(createNewTask({ title, description }))
     setShow(false)
   }
 
@@ -17,7 +18,7 @@ const ModalCreateProject = ({ show, setShow }) => {
     <Modal isOpen={show} onClose={() => setShow(false)}>
       <Modal.Content>
         <Modal.CloseButton />
-        <Modal.Header>Create new project</Modal.Header>
+        <Modal.Header>Create new task</Modal.Header>
         <Modal.Body>
           <VStack justifyContent='space-between' space='4'>
             <FormControl>
@@ -33,7 +34,7 @@ const ModalCreateProject = ({ show, setShow }) => {
             </FormControl>
           </VStack>
           <Modal.Footer>
-            <Button onPress={addProject}>Create</Button>
+            <Button onPress={addTask}>Create</Button>
           </Modal.Footer>
         </Modal.Body>
       </Modal.Content>
@@ -41,4 +42,4 @@ const ModalCreateProject = ({ show, setShow }) => {
   )
 }
 
-export default ModalCreateProject
+export default ModalCreateTask

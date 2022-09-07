@@ -15,7 +15,7 @@ export const fetchTasks = createAsyncThunk(
   }
 )
 
-export const createTask = createAsyncThunk(
+export const createNewTask = createAsyncThunk(
   'tasks/createTask',
   async ({ title, description }, { dispatch, getState }) => {
     try {
@@ -25,9 +25,9 @@ export const createTask = createAsyncThunk(
         description,
         status_id: 1,
         type_id: 1,
+        user_id: 72,
       })
       dispatch(fetchTasks())
-      console.log(answer.data)
     } catch (error) {
       console.log('error tasks/createTask')
       console, log(error.response)

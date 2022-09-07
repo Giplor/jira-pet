@@ -23,7 +23,6 @@ export const createNewProject = createAsyncThunk(
         description,
       })
       dispatch(fetchProjects())
-      console.log(answer.data)
     } catch (error) {
       console.log('error projects/createProjects')
       console.log(error.response)

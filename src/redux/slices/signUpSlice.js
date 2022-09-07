@@ -3,14 +3,16 @@ import axiosInstance from '../../api/axios'
 
 export const handleSignUp = createAsyncThunk(
   'singUp/handleSignUp',
-  async ({ username, email, password }) => {
+  async (_, { getState }) => {
     try {
+      const username = getState().signUp.username
+      const email = getState().signUp.email
+      const password = getState().signUp.password
       const answer = await axiosInstance.post('/registration', {
         username,
         email,
         password,
       })
-      console.log(answer.data)
     } catch (error) {
       console.log('error singUp/handleSignUp')
       console.log(error.response)

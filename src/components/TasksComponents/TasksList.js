@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native'
 import { Box, FlatList } from 'native-base'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,14 +7,18 @@ import TaskItem from './TaskItem'
 
 const TasksList = () => {
   const dispatch = useDispatch()
+  const navigation = useNavigation()
   const tasks = useSelector((state) => state.tasks.tasks)
 
   useEffect(() => {
-    dispatch(fetchTasks())
-  }, [])
+    const unsubscribe = navigation.addListener('focus', () => {
+      dispatch(fetchTasks())
+    })
+    return unsubscribe
+  }, [navigation])
 
   return (
-    <Box width='100%' height='100%'>
+    <Box width='100%' height='70%'>
       <FlatList
         data={tasks}
         renderItem={({ item }) => <TaskItem task={item} />}

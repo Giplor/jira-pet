@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native'
-import { Text, Box, HStack, VStack, Pressable } from 'native-base'
+import { Text, Box, HStack, VStack, Pressable, Center } from 'native-base'
 import { setProjectId } from '../../redux/slices/tasksSlice'
 import { useDispatch } from 'react-redux'
 
@@ -8,23 +8,26 @@ const ProjectItem = ({ project }) => {
   const dispatch = useDispatch()
 
   return (
-    <Pressable
-      onPress={() => {
-        dispatch(setProjectId(project.id), navigation.navigate('Tasks'))
-      }}
-    >
-      <Box width='80%' borderBottomWidth={1} pl={['0', '4']} pr={['0', '5']} py='2'>
-        <HStack justifyContent='space-between' space={[2, 3]}>
+    <Center>
+      <Pressable
+        width='90%'
+        onPress={() => {
+          dispatch(setProjectId(project.id), navigation.navigate('Tasks'))
+        }}
+      >
+        <Box borderBottomWidth={1} py='2'>
           <VStack>
-            <Text fontSize='xl' bold>
-              {project.title}
-            </Text>
+            <HStack justifyContent='space-between'>
+              <Text fontSize='xl' bold>
+                {project.title}
+              </Text>
+              <Text>Tasks: {project.task_count}</Text>
+            </HStack>
             <Text color='coolGray.700'>{project.description}</Text>
           </VStack>
-          <Text>Tasks: {project.task_count}</Text>
-        </HStack>
-      </Box>
-    </Pressable>
+        </Box>
+      </Pressable>
+    </Center>
   )
 }
 

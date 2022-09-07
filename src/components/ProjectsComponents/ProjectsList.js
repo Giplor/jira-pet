@@ -1,16 +1,21 @@
-import { Box, FlatList } from 'native-base'
+import { Box, Button, FlatList } from 'native-base'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchProjects } from '../../redux/slices/projectsSlice'
 import ProjectItem from './ProjectItem'
+import { useNavigation } from '@react-navigation/native'
 
 const ProjectsList = () => {
   const dispatch = useDispatch()
+  const navigation = useNavigation()
   const projects = useSelector((state) => state.projects.projects)
 
   useEffect(() => {
-    dispatch(fetchProjects())
-  }, [])
+    const unsubscribe = navigation.addListener('focus', () => {
+      dispatch(fetchProjects())
+    })
+    return unsubscribe
+  }, [navigation])
 
   return (
     <Box width='100%' height='80%'>
@@ -20,6 +25,7 @@ const ProjectsList = () => {
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
       />
+      <Button onPress={() => navigation.navigate('Users')}>go to users</Button>
     </Box>
   )
 }
