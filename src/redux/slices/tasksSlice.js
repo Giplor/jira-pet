@@ -20,7 +20,7 @@ export const createNewTask = createAsyncThunk(
   async ({ title, description }, { dispatch, getState }) => {
     try {
       const projectId = getState().tasks.projectId
-      const answer = await axiosInstance.post(`projects/${projectId}/tasks`, {
+      await axiosInstance.post(`projects/${projectId}/tasks`, {
         title,
         description,
         status_id: 1,
