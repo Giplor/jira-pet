@@ -11,6 +11,7 @@ export const fetchTasks = createAsyncThunk(
     } catch (error) {
       console.log('error taksks/fetchTasks')
       console.log(error.response)
+    } finally {
     }
   }
 )
@@ -46,7 +47,6 @@ const tasksSlice = createSlice({
   reducers: {
     setTasks: (state, action) => {
       state.tasks = action.payload
-      console.log(current(state))
     },
     setProjectId: (state, action) => {
       state.projectId = action.payload

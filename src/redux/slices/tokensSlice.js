@@ -11,6 +11,7 @@ const tokensSlice = createSlice({
   reducers: {
     setAccessToken: (state, action) => {
       state.accessToken = action.payload
+      console.log(action.payload)
     },
     setRefreshToken: (state, action) => {
       state.refreshToken = action.payload

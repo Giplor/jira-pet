@@ -8,7 +8,7 @@ const ProjectsScreen = () => {
   const dispatch = useDispatch()
 
   return (
-    <Box width='100%' safeArea position='absolute'>
+    <Box width='100%' safeArea>
       <Button onPress={() => dispatch(handleLogOut())}>Log out</Button>
       <ProjectsList />
       <ModalCreateProject />

@@ -7,14 +7,14 @@ const ProjectItem = ({ project }) => {
   const navigation = useNavigation()
   const dispatch = useDispatch()
 
+  const openProjectInfo = () => {
+    dispatch(setProjectId(project.id))
+    navigation.navigate('ProjectInfo')
+  }
+
   return (
     <Center>
-      <Pressable
-        width='90%'
-        onPress={() => {
-          dispatch(setProjectId(project.id), navigation.navigate('Tasks'))
-        }}
-      >
+      <Pressable width='90%' onPress={openProjectInfo}>
         <Box borderBottomWidth={1} py='2'>
           <VStack>
             <HStack justifyContent='space-between'>
