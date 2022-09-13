@@ -5,7 +5,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import { NativeBaseProvider } from 'native-base'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { NavigationContainer } from '@react-navigation/native'
-import GeneralRoute from './src/route/GeneralRoute'
+import MainCondition from './src/route/MainCondition'
 import { injectStore } from './src/api/axios'
 injectStore(store)
 
@@ -16,7 +16,7 @@ export default function App() {
         <NativeBaseProvider>
           <SafeAreaProvider>
             <NavigationContainer>
-              <GeneralRoute />
+              <MainCondition />
             </NavigationContainer>
           </SafeAreaProvider>
         </NativeBaseProvider>

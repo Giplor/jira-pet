@@ -1,10 +1,15 @@
-import { Box, Text } from 'native-base'
+import { Box, Center, HStack, Text } from 'native-base'
 
 const TaskItem = ({ task }) => {
   return (
-    <Box>
-      <Text>{task.title}</Text>
-    </Box>
+    <Center>
+      <Box width='100%'>
+        <HStack justifyContent='space-between'>
+          <Text>{task.title}</Text>
+          <Text>{task.username}</Text>
+        </HStack>
+      </Box>
+    </Center>
   )
 }
 

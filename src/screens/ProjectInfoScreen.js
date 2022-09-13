@@ -1,13 +1,11 @@
 import { Box, Heading } from 'native-base'
 import TasksList from '../components/TasksComponents/TasksList'
 
-const ProjectInfoScreen = () => {
+const ProjectInfoScreen = ({ route }) => {
   return (
-    <Box safeArea>
-      <Heading>Project name</Heading>
-      <Box>
-        <TasksList />
-      </Box>
+    <Box width='100%' safeArea>
+      <Heading>{route.params.projectName}</Heading>
+      <TasksList />
     </Box>
   )
 }

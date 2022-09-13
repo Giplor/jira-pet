@@ -1,14 +1,14 @@
 import { useSelector } from 'react-redux'
-import ProjectsRoute from './ProjectsRoute'
 import AuthRoute from './AuthRoute'
+import MainRoute from './MainRoute'
 
-const GeneralRoute = () => {
+const MainCondition = () => {
   const token = useSelector((state) => state.tokens.accessToken)
   if (token) {
-    return <ProjectsRoute />
+    return <MainRoute />
   } else {
     return <AuthRoute />
   }
 }
 
-export default GeneralRoute
+export default MainCondition
