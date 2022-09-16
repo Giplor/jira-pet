@@ -11,10 +11,13 @@ const tokensSlice = createSlice({
   reducers: {
     setAccessToken: (state, action) => {
       state.accessToken = action.payload
+      console.log('access')
       console.log(action.payload)
     },
     setRefreshToken: (state, action) => {
       state.refreshToken = action.payload
+      console.log('refresh')
+      console.log(action.payload)
     },
   },
 })

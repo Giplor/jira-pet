@@ -1,13 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { HStack, Text } from 'native-base'
 import UserAvatar from './UserAvatar'
 
 const UserItem = ({ users }) => {
   return (
-    <View>
-      <Text>{users.username}</Text>
+    <HStack alignItems='center' py={2} px={5}>
       <UserAvatar avatar={users.avatar} />
-    </View>
+      <Text pl={4}>{users.username}</Text>
+    </HStack>
   )
 }
 

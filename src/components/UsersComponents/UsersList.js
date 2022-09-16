@@ -13,12 +13,13 @@ const UsersList = () => {
   }, [])
 
   return (
-    <Box wdth='100%' height='80%'>
+    <Box width='100%' height={400}>
       <FlatList
         data={users}
         renderItem={({ item }) => <UserItem users={item} />}
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
+        maxToRenderPerBatch={10}
       />
     </Box>
   )
