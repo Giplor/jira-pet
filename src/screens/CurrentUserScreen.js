@@ -1,4 +1,4 @@
-import { Box, Center, Text, VStack } from 'native-base'
+import { Box, Center, Text, View, VStack } from 'native-base'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchCurrentUser } from '../redux/slices/userSlice'
@@ -14,7 +14,7 @@ const CurrentUserScreen = () => {
   const currentUser = useSelector((state) => state.user.user)
   return (
     <Center width='100%' height='100%' safeArea>
-      <Box>
+      <View>
         <VStack alignItems='center'>
           <UserAvatar />
           <Text>{currentUser?.id}</Text>
@@ -22,7 +22,7 @@ const CurrentUserScreen = () => {
           <Text>{currentUser?.email}</Text>
           <Text>{currentUser?.role}</Text>
         </VStack>
-      </Box>
+      </View>
     </Center>
   )
 }

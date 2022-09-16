@@ -1,4 +1,4 @@
-import { Box, FlatList } from 'native-base'
+import { Box, FlatList, View } from 'native-base'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import UserItem from './UserItem'
@@ -13,7 +13,7 @@ const UsersList = () => {
   }, [])
 
   return (
-    <Box width='100%' height={400}>
+    <View width='100%' height={400}>
       <FlatList
         data={users}
         renderItem={({ item }) => <UserItem users={item} />}
@@ -21,7 +21,7 @@ const UsersList = () => {
         showsVerticalScrollIndicator={false}
         maxToRenderPerBatch={10}
       />
-    </Box>
+    </View>
   )
 }
 

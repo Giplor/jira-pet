@@ -1,4 +1,4 @@
-import { Box, Center } from 'native-base'
+import { Box, Center, View } from 'native-base'
 import { useDispatch, useSelector } from 'react-redux'
 import FormButton from '../components/AuthComponents/FormButton'
 import FormInput from '../components/AuthComponents/FormInput'
@@ -23,12 +23,12 @@ const SignInScreen = () => {
 
   return (
     <Center width='100%' safeArea>
-      <Box width='80%' maxWidth='260'>
+      <View width='80%' maxWidth='260'>
         <FormInput value={email} setValue={setEmailValue} label='Email' />
         <FormInputPassword value={password} setValue={setPasswordValue} />
         <FormButton title='Sign in' onSubmit={signIn} />
         <SwitchScreen screenName='SignUp' />
-      </Box>
+      </View>
     </Center>
   )
 }
