@@ -14,7 +14,7 @@ const CurrentUserScreen = () => {
   const currentUser = useSelector((state) => state.user.user)
   return (
     <Center width='100%' height='100%' safeArea>
-      <View>
+      <Box>
         <VStack alignItems='center'>
           <UserAvatar />
           <Text>{currentUser?.id}</Text>
@@ -22,7 +22,7 @@ const CurrentUserScreen = () => {
           <Text>{currentUser?.email}</Text>
           <Text>{currentUser?.role}</Text>
         </VStack>
-      </View>
+      </Box>
     </Center>
   )
 }

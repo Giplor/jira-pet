@@ -23,12 +23,12 @@ const SignInScreen = () => {
 
   return (
     <Center width='100%' safeArea>
-      <View width='80%' maxWidth='260'>
+      <Box width='80%' maxWidth='260'>
         <FormInput value={email} setValue={setEmailValue} label='Email' />
         <FormInputPassword value={password} setValue={setPasswordValue} />
         <FormButton title='Sign in' onSubmit={signIn} />
         <SwitchScreen screenName='SignUp' />
-      </View>
+      </Box>
     </Center>
   )
 }

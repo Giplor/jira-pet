@@ -13,7 +13,7 @@ const UsersList = () => {
   }, [])
 
   return (
-    <View width='100%' height={400}>
+    <Box width='100%' height={400}>
       <FlatList
         data={users}
         renderItem={({ item }) => <UserItem users={item} />}
@@ -21,7 +21,7 @@ const UsersList = () => {
         showsVerticalScrollIndicator={false}
         maxToRenderPerBatch={10}
       />
-    </View>
+    </Box>
   )
 }
 

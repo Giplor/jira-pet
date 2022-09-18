@@ -13,14 +13,14 @@ const TasksList = () => {
   }, [])
 
   return (
-    <View width='100%' height='70%'>
+    <Box width='100%' height='70%'>
       <FlatList
         data={tasks}
         renderItem={({ item }) => <TaskItem task={item} />}
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
       />
-    </View>
+    </Box>
   )
 }
 

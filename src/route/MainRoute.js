@@ -3,9 +3,12 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import ProjectsScreen from '../screens/ProjectsScreen'
 import ProjectInfoScreen from '../screens/ProjectInfoScreen'
 import CurrentUserScreen from '../screens/CurrentUserScreen'
+import CreateNewProjectScreen from '../screens/CreateNewProjectScreen'
 import { Ionicons } from '@expo/vector-icons'
+import CreateNewTaskScreen from '../screens/CreateNewTaskScreen'
 
 const ProjectsStack = createNativeStackNavigator()
+
 const ProjectsStackScreen = () => {
   return (
     <ProjectsStack.Navigator screenOptions={{ headerShown: false }}>
@@ -16,6 +19,7 @@ const ProjectsStackScreen = () => {
 }
 
 const UserStack = createNativeStackNavigator()
+
 const UserStackScreen = () => {
   return (
     <UserStack.Navigator screenOptions={{ headerShown: false }}>
@@ -25,7 +29,8 @@ const UserStackScreen = () => {
 }
 
 const Tab = createBottomTabNavigator()
-const MainRoute = () => {
+
+const TabRoute = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -46,6 +51,18 @@ const MainRoute = () => {
       <Tab.Screen name='ProjectsScreen' component={ProjectsStackScreen} />
       <Tab.Screen name='UserScreen' component={UserStackScreen} />
     </Tab.Navigator>
+  )
+}
+
+const MainStack = createNativeStackNavigator()
+
+const MainRoute = () => {
+  return (
+    <MainStack.Navigator screenOptions={{ headerShown: false }}>
+      <MainStack.Screen name='Main' component={TabRoute} />
+      <MainStack.Screen name='CreateNewProject' component={CreateNewProjectScreen} />
+      <MainStack.Screen name='CreateNewTask' component={CreateNewTaskScreen} />
+    </MainStack.Navigator>
   )
 }
 

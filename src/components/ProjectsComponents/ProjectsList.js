@@ -18,14 +18,14 @@ const ProjectsList = () => {
   }, [navigation])
 
   return (
-    <View width='100%' height='80%'>
+    <Box width='100%' height='80%'>
       <FlatList
         data={projects}
         renderItem={({ item }) => <ProjectItem project={item} />}
         keyExtractor={(item) => item.id}
         showsVerticalScrollIndicator={false}
       />
-    </View>
+    </Box>
   )
 }
 
