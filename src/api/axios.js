@@ -31,18 +31,16 @@ axiosInstance.interceptors.response.use(
     const originalRequest = error.config
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
-      const token = store.getState().tokens.refreshToken
+      const token = store.getState().tokens.accessToken
+      const refreshToken = store.getState().tokens.refreshToken
       if (token) {
         let decoded = jwtDecode(token)
-        const expirationDate = dayjs(decoded.exp)
         const currentDate = dayjs()
+        const expirationDate = dayjs.unix(decoded.exp)
         if (currentDate.diff(expirationDate) > 0) {
-          const answer = await axios.post(
-            'https://jirapet-python.herokuapp.com/api/refresh',
-            {
-              refresh: token,
-            }
-          )
+          const answer = await axiosInstance.post('/refresh', {
+            refresh: refreshToken,
+          })
           store.dispatch({
             type: 'tokens/setAccessToken',
             payload: answer.data.access,
