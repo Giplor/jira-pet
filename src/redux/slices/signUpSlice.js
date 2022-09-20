@@ -3,8 +3,9 @@ import axiosInstance from '../../api/axios'
 
 export const handleSignUp = createAsyncThunk(
   'singUp/handleSignUp',
-  async (_, { getState }) => {
+  async (_, { dispatch, getState }) => {
     try {
+      dispatch(setIsLoading(true))
       const username = getState().signUp.username
       const email = getState().signUp.email
       const password = getState().signUp.password
@@ -17,6 +18,8 @@ export const handleSignUp = createAsyncThunk(
     } catch (error) {
       console.log('error singUp/handleSignUp')
       console.log(error.response.data)
+    } finally {
+      dispatch(setIsLoading(false))
     }
   }
 )
@@ -25,6 +28,7 @@ const initialState = {
   username: '',
   email: '',
   password: '',
+  isLoading: false,
 }
 
 const signUpSlice = createSlice({
@@ -40,9 +44,13 @@ const signUpSlice = createSlice({
     setPassword: (state, action) => {
       state.password = action.payload
     },
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload
+    },
   },
 })
 
-export const { setUsername, setEmail, setPassword } = signUpSlice.actions
+export const { setUsername, setEmail, setPassword, setIsLoading } =
+  signUpSlice.actions
 
 export default signUpSlice.reducer
