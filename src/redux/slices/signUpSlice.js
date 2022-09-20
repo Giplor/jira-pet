@@ -13,9 +13,10 @@ export const handleSignUp = createAsyncThunk(
         email,
         password,
       })
+      console.log(answer.data)
     } catch (error) {
       console.log('error singUp/handleSignUp')
-      console.log(error.response)
+      console.log(error.response.data)
     }
   }
 )

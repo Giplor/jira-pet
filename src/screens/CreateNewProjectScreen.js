@@ -1,8 +1,12 @@
 import { useNavigation } from '@react-navigation/native'
 import { Box, Button, FormControl, Input, VStack } from 'native-base'
+import { useDispatch } from 'react-redux'
 
 const CreateNewProjectScreen = () => {
   const navigation = useNavigation()
+  const dispatch = useDispatch()
+
+  const createProject = () => {}
 
   return (
     <Box width='100%' safeArea>
@@ -15,7 +19,7 @@ const CreateNewProjectScreen = () => {
           <FormControl.Label>Description</FormControl.Label>
           <Input />
         </FormControl>
-        <Button onPress={() => navigation.navigate('ProjectsScreen')}>
+        <Button onPress={() => navigation.navigate('Main', { screen: 'Projects' })}>
           Create project
         </Button>
       </VStack>

@@ -4,8 +4,9 @@ import { setAccessToken, setRefreshToken } from './tokensSlice'
 
 export const handleSignIn = createAsyncThunk(
   'signIn/handleSignIn',
-  async (_, { dispatch, getState }) => {
+  async (callback, { dispatch, getState }) => {
     try {
+      dispatch(setIsLoading(true))
       const email = getState().signIn.email
       const password = getState().signIn.password
       const answer = await axiosInstance.post('/login', {
@@ -15,10 +16,13 @@ export const handleSignIn = createAsyncThunk(
       if (answer.data.access_token) {
         dispatch(setAccessToken(answer.data.access_token))
         dispatch(setRefreshToken(answer.data.refresh_token))
+        dispatch(setEmail(''))
       }
     } catch (error) {
       console.log('error signIn/handleSignIn')
-      console.log(error.response.data)
+      callback?.(error.response.data.detail)
+    } finally {
+      dispatch(setIsLoading(false))
     }
   }
 )
@@ -39,6 +43,7 @@ export const handleLogOut = createAsyncThunk(
 const initialState = {
   email: '',
   password: '',
+  isLoading: false,
 }
 
 const signInSlice = createSlice({
@@ -51,9 +56,12 @@ const signInSlice = createSlice({
     setPassword: (state, action) => {
       state.password = action.payload
     },
+    setIsLoading: (state, action) => {
+      state.isLoading = action.payload
+    },
   },
 })
 
-export const { setEmail, setPassword } = signInSlice.actions
+export const { setEmail, setPassword, setIsLoading } = signInSlice.actions
 
 export default signInSlice.reducer

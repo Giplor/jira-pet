@@ -1,5 +1,7 @@
 import { useNavigation } from '@react-navigation/native'
-import { Box, Button, FormControl, Input, VStack } from 'native-base'
+import { Box, Button, FormControl, Input, Text, VStack } from 'native-base'
+import UsersList from '../components/UsersComponents/UsersList'
+
 const CreateNewTaskScreen = () => {
   const navigation = useNavigation()
 
@@ -14,10 +16,16 @@ const CreateNewTaskScreen = () => {
           <FormControl.Label>Description</FormControl.Label>
           <Input />
         </FormControl>
-        <Button onPress={() => navigation.navigate('ProjectInfoScreen')}>
+        <Button
+          onPress={() =>
+            navigation.navigate('Main', { screen: 'ProjectInfoScreen' })
+          }
+        >
           Create task
         </Button>
       </VStack>
+      <Text>Selected user: </Text>
+      <UsersList />
     </Box>
   )
 }

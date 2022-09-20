@@ -5,9 +5,9 @@ const FormInput = ({ label, value, setValue }) => {
     <FormControl>
       <FormControl.Label>{label}</FormControl.Label>
       <Input value={value} onChangeText={setValue} />
-      <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
-        Error
-      </FormControl.ErrorMessage>
+      <FormControl.ErrorMessage
+        leftIcon={<WarningOutlineIcon size='xs' />}
+      ></FormControl.ErrorMessage>
     </FormControl>
   )
 }

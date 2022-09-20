@@ -1,4 +1,4 @@
-import { Box, Button, Fab, Icon, Input, View } from 'native-base'
+import { Box, Button, Fab, Icon } from 'native-base'
 import { handleLogOut } from '../redux/slices/signInSlice'
 import { useDispatch } from 'react-redux'
 import ProjectsList from '../components/ProjectsComponents/ProjectsList'
@@ -9,7 +9,7 @@ const ProjectsScreen = () => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
   return (
-    <Box width='100%' safeArea>
+    <Box width='100%' height='100%' safeArea>
       <Button onPress={() => dispatch(handleLogOut())}>Log out</Button>
       <ProjectsList />
       <Fab

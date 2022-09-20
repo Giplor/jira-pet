@@ -1,33 +1,35 @@
-import { Box, Center, View } from 'native-base'
+import { Box, Button, Center } from 'native-base'
 import { useDispatch, useSelector } from 'react-redux'
-import FormButton from '../components/AuthComponents/FormButton'
 import FormInput from '../components/AuthComponents/FormInput'
 import FormInputPassword from '../components/AuthComponents/FormInputPassword'
-import SwitchScreen from '../components/AuthComponents/SwitchScreen'
 import { handleSignIn, setEmail, setPassword } from '../redux/slices/signInSlice'
 
 const SignInScreen = () => {
   const dispatch = useDispatch()
   const email = useSelector((state) => state.signIn.email)
   const password = useSelector((state) => state.signIn.password)
+  const loading = useSelector((state) => state.signIn.isLoading)
 
   const setEmailValue = (text) => {
     dispatch(setEmail(text))
   }
+
   const setPasswordValue = (text) => {
     dispatch(setPassword(text))
   }
+
   const signIn = () => {
-    dispatch(handleSignIn({ email, password }))
+    dispatch(handleSignIn())
   }
 
   return (
     <Center width='100%' safeArea>
       <Box width='80%' maxWidth='260'>
-        <FormInput value={email} setValue={setEmailValue} label='Email' />
-        <FormInputPassword value={password} setValue={setPasswordValue} />
-        <FormButton title='Sign in' onSubmit={signIn} />
-        <SwitchScreen screenName='SignUp' />
+        <FormInput value={email} label='Email' setValue={setEmailValue} />
+        <FormInputPassword value={password.value} setValue={setPasswordValue} />
+        <Button colorScheme='indigo' isLoading={loading}>
+          Sign in
+        </Button>
       </Box>
     </Center>
   )
