@@ -1,39 +1,60 @@
 import { useNavigation } from '@react-navigation/native'
-import { Box, Button, Center, VStack } from 'native-base'
-import { useDispatch, useSelector } from 'react-redux'
+import { Box, Button, Center, VStack, useToast } from 'native-base'
+import { useSelector, useDispatch } from 'react-redux'
 import FormInput from '../components/AuthComponents/FormInput'
 import FormInputPassword from '../components/AuthComponents/FormInputPassword'
-import { handleSignIn, setEmail, setPassword } from '../redux/slices/signInSlice'
+import { useValidation } from '../hooks/useValidation'
+import { signIn } from '../redux/slices/signInSlice'
 
 const SignInScreen = () => {
   const dispatch = useDispatch()
-  const email = useSelector((state) => state.signIn.email)
-  const password = useSelector((state) => state.signIn.password)
   const loading = useSelector((state) => state.signIn.isLoading)
   const navigation = useNavigation()
+  const email = useValidation('', 'isEmail')
+  const password = useValidation('', 'isPassword')
+  const toast = useToast()
+  console.log('SIGNINSCREEN')
 
-  const setEmailValue = (text) => {
-    dispatch(setEmail(text))
+  const handleError = (errorMessage) => {
+    toast.show({
+      description: errorMessage,
+    })
   }
 
-  const setPasswordValue = (text) => {
-    dispatch(setPassword(text))
-  }
-
-  const signIn = () => {
-    dispatch(handleSignIn())
+  const handleSignIn = () => {
+    dispatch(
+      signIn({ email: email.value, password: password.value, callback: handleError })
+    )
   }
 
   return (
     <Center width='100%' safeArea>
       <Box width='80%' maxWidth='260'>
         <VStack space='3'>
-          <FormInput value={email} label='Email' setValue={setEmailValue} />
-          <FormInputPassword value={password.value} setValue={setPasswordValue} />
-          <Button colorScheme='indigo' isLoading={loading} onPress={signIn}>
+          <FormInput
+            value={email.value}
+            setValue={(text) => email.onChange(text)}
+            onBlur={email.onBlur}
+            errorMessage={email.errorMessage}
+            label='Email'
+          />
+          <FormInputPassword
+            value={password.value}
+            setValue={(text) => password.onChange(text)}
+            onBlur={password.onBlur}
+            errorMessage={password.errorMessage}
+          />
+          <Button
+            colorScheme='indigo'
+            isDisabled={!email.isValid || !password.isValid}
+            onPress={handleSignIn}
+            isLoading={loading}
+          >
             Sign in
           </Button>
-          <Button onPress={() => navigation.navigate('SignUp')}>Sign up</Button>
+          <Button isDisabled={loading} onPress={() => navigation.navigate('SignUp')}>
+            Sign up
+          </Button>
         </VStack>
       </Box>
     </Center>

@@ -2,13 +2,11 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axiosInstance from '../../api/axios'
 import { setAccessToken, setRefreshToken } from './tokensSlice'
 
-export const handleSignIn = createAsyncThunk(
+export const signIn = createAsyncThunk(
   'signIn/handleSignIn',
-  async (callback, { dispatch, getState }) => {
+  async ({ email, password, callback }, { dispatch }) => {
     try {
       dispatch(setIsLoading(true))
-      const email = getState().signIn.email
-      const password = getState().signIn.password
       const answer = await axiosInstance.post('/login', {
         email,
         password,
@@ -41,8 +39,6 @@ export const handleLogOut = createAsyncThunk(
 )
 
 const initialState = {
-  email: '',
-  password: '',
   isLoading: false,
 }
 
@@ -50,18 +46,12 @@ const signInSlice = createSlice({
   name: 'signIn',
   initialState,
   reducers: {
-    setEmail: (state, action) => {
-      state.email = action.payload
-    },
-    setPassword: (state, action) => {
-      state.password = action.payload
-    },
     setIsLoading: (state, action) => {
       state.isLoading = action.payload
     },
   },
 })
 
-export const { setEmail, setPassword, setIsLoading } = signInSlice.actions
+export const { setIsLoading } = signInSlice.actions
 
 export default signInSlice.reducer

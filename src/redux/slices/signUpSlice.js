@@ -1,14 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axiosInstance from '../../api/axios'
 
-export const handleSignUp = createAsyncThunk(
+export const signUp = createAsyncThunk(
   'singUp/handleSignUp',
-  async (_, { dispatch, getState }) => {
+  async ({ username, email, password }, { dispatch }) => {
     try {
       dispatch(setIsLoading(true))
-      const username = getState().signUp.username
-      const email = getState().signUp.email
-      const password = getState().signUp.password
       const answer = await axiosInstance.post('/registration', {
         username,
         email,
@@ -25,9 +22,6 @@ export const handleSignUp = createAsyncThunk(
 )
 
 const initialState = {
-  username: '',
-  email: '',
-  password: '',
   isLoading: false,
 }
 
@@ -35,22 +29,12 @@ const signUpSlice = createSlice({
   name: 'signUp',
   initialState,
   reducers: {
-    setUsername: (state, action) => {
-      state.username = action.payload
-    },
-    setEmail: (state, action) => {
-      state.email = action.payload
-    },
-    setPassword: (state, action) => {
-      state.password = action.payload
-    },
     setIsLoading: (state, action) => {
       state.isLoading = action.payload
     },
   },
 })
 
-export const { setUsername, setEmail, setPassword, setIsLoading } =
-  signUpSlice.actions
+export const { setIsLoading } = signUpSlice.actions
 
 export default signUpSlice.reducer

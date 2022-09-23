@@ -2,16 +2,17 @@ import { FormControl, Input, WarningOutlineIcon, Pressable, Icon } from 'native-
 import { MaterialIcons } from '@expo/vector-icons'
 import { useState } from 'react'
 
-const FormInputPassword = ({ value, setValue }) => {
+const FormInputPassword = ({ value, setValue, onBlur, errorMessage }) => {
   const [showPassword, setShowPassword] = useState(false)
   return (
     <>
-      <FormControl>
+      <FormControl isInvalid={errorMessage}>
         <FormControl.Label>Password</FormControl.Label>
         <Input
           type={showPassword ? 'text' : 'password'}
           value={value}
           onChangeText={setValue}
+          onBlur={onBlur}
           InputRightElement={
             <Pressable onPress={() => setShowPassword(!showPassword)}>
               <Icon
@@ -27,7 +28,7 @@ const FormInputPassword = ({ value, setValue }) => {
           }
         />
         <FormControl.ErrorMessage leftIcon={<WarningOutlineIcon size='xs' />}>
-          Error
+          {errorMessage}
         </FormControl.ErrorMessage>
       </FormControl>
     </>
