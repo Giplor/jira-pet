@@ -1,11 +1,14 @@
-import { Box, Center, Text, View, VStack } from 'native-base'
+import { Box, Center, FlatList, Text, VStack, Button } from 'native-base'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchCurrentUser } from '../redux/slices/userSlice'
 import UserAvatar from '../components/UsersComponents/UserAvatar'
+import { selectUserProjects } from '../redux/selectors/selectors'
+import ProjectsList from '../components/ProjectsComponents/ProjectsList'
 
 const CurrentUserScreen = () => {
   const dispatch = useDispatch()
+  const projects = useSelector(selectUserProjects)
 
   useEffect(() => {
     dispatch(fetchCurrentUser())
@@ -13,14 +16,13 @@ const CurrentUserScreen = () => {
 
   const currentUser = useSelector((state) => state.user.user)
   return (
-    <Center width='100%' height='100%' safeArea>
-      <Box>
+    <Center width='100%' height='90%' safeArea>
+      <Box width='80%'>
         <VStack alignItems='center'>
           <UserAvatar />
-          <Text>{currentUser?.id}</Text>
           <Text>{currentUser?.username}</Text>
           <Text>{currentUser?.email}</Text>
-          <Text>{currentUser?.role}</Text>
+          <ProjectsList data={projects} />
         </VStack>
       </Box>
     </Center>
