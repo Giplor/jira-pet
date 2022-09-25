@@ -34,7 +34,7 @@ export const useValidation = (initialState = '', validation = 'isEmpty') => {
         return
       } else if (
         validation === 'isPassword' &&
-        !value.match(/^(?!.*\s)(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/)
+        !value.match(/^(?!.*\s)(?=.*\d)(?=.*[a-z]).{6,20}$/)
       ) {
         setError('Please enter a valid password!')
         return

@@ -14,7 +14,6 @@ export const signIn = createAsyncThunk(
       if (answer.data.access_token) {
         dispatch(setAccessToken(answer.data.access_token))
         dispatch(setRefreshToken(answer.data.refresh_token))
-        dispatch(setEmail(''))
       }
     } catch (error) {
       console.log('error signIn/handleSignIn')

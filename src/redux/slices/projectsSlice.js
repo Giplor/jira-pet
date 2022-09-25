@@ -24,7 +24,23 @@ export const createNewProject = createAsyncThunk(
       })
       dispatch(fetchProjects())
     } catch (error) {
-      console.log('error projects/createProjects')
+      console.log('error projects/createProject')
+      console.log(error.response)
+    }
+  }
+)
+
+export const editProject = createAsyncThunk(
+  'projects/editProject',
+  async ({ title, description }, { dispatch }) => {
+    try {
+      await axiosInstance.put(`/projects/${projectId}`, {
+        title,
+        description,
+      })
+      dispatch(fetchProjects())
+    } catch (error) {
+      console.log('error projects/editProject')
       console.log(error.response)
     }
   }

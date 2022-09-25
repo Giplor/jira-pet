@@ -1,8 +1,8 @@
 import { useNavigation } from '@react-navigation/native'
 import { Box, Button, Center, VStack } from 'native-base'
 import { useDispatch, useSelector } from 'react-redux'
-import FormInput from '../components/AuthComponents/FormInput'
-import FormInputPassword from '../components/AuthComponents/FormInputPassword'
+import DefaultInput from '../components/UIComponents/DefaultInput'
+import SecureInput from '../components/UIComponents/SecureInput'
 import { useValidation } from '../hooks/useValidation'
 import { signUp } from '../redux/slices/signUpSlice'
 
@@ -28,21 +28,21 @@ const SignUpScreen = () => {
     <Center width='100%' safeArea>
       <Box width='80%' maxWidth='260'>
         <VStack space='3'>
-          <FormInput
+          <DefaultInput
             value={username.value}
-            setValue={(text) => password.onChange(text)}
+            setValue={(text) => username.onChange(text)}
             onBlur={username.onBlur}
             errorMessage={username.errorMessage}
             label='Username'
           />
-          <FormInput
+          <DefaultInput
             value={email.value}
             setValue={(text) => email.onChange(text)}
             onBlur={email.onBlur}
             errorMessage={email.errorMessage}
             label='Email'
           />
-          <FormInputPassword
+          <SecureInput
             value={password.value}
             setValue={(text) => password.onChange(text)}
             onBlur={password.onBlur}

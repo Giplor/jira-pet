@@ -1,8 +1,8 @@
 import { useNavigation } from '@react-navigation/native'
 import { Box, Button, Center, VStack, useToast } from 'native-base'
 import { useSelector, useDispatch } from 'react-redux'
-import FormInput from '../components/AuthComponents/FormInput'
-import FormInputPassword from '../components/AuthComponents/FormInputPassword'
+import DefaultInput from '../components/UIComponents/DefaultInput'
+import SecureInput from '../components/UIComponents/SecureInput'
 import { useValidation } from '../hooks/useValidation'
 import { signIn } from '../redux/slices/signInSlice'
 
@@ -13,7 +13,6 @@ const SignInScreen = () => {
   const email = useValidation('', 'isEmail')
   const password = useValidation('', 'isPassword')
   const toast = useToast()
-  console.log('SIGNINSCREEN')
 
   const handleError = (errorMessage) => {
     toast.show({
@@ -31,14 +30,14 @@ const SignInScreen = () => {
     <Center width='100%' safeArea>
       <Box width='80%' maxWidth='260'>
         <VStack space='3'>
-          <FormInput
+          <DefaultInput
             value={email.value}
             setValue={(text) => email.onChange(text)}
             onBlur={email.onBlur}
             errorMessage={email.errorMessage}
             label='Email'
           />
-          <FormInputPassword
+          <SecureInput
             value={password.value}
             setValue={(text) => password.onChange(text)}
             onBlur={password.onBlur}

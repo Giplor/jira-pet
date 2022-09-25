@@ -1,4 +1,4 @@
-import { Box, Heading, Fab, Icon, IconButton } from 'native-base'
+import { Box, Heading, Fab, Icon, IconButton, Button } from 'native-base'
 import TasksList from '../components/TasksComponents/TasksList'
 import { AntDesign } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
@@ -9,6 +9,7 @@ const ProjectInfoScreen = ({ route }) => {
   return (
     <Box width='100%' height='100%' safeArea>
       <Heading>{route.params.projectName}</Heading>
+      <Button>EDIT</Button>
       <TasksList />
       <IconButton icon={<Icon as={AntDesign} name='adduser' size='2xl' />} />
       <Fab
