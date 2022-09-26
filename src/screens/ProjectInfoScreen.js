@@ -15,6 +15,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { projectInfo, selectCurrentProject } from '../redux/selectors/selectors'
 import { useEffect } from 'react'
 import { fetchTasks } from '../redux/slices/tasksSlice'
+import UserItem from '../components/UsersComponents/UserItem'
+import TaskItem from '../components/TasksComponents/TaskItem'
 
 const ProjectInfoScreen = () => {
   const dispatch = useDispatch()
@@ -31,7 +33,11 @@ const ProjectInfoScreen = () => {
   }, [])
 
   const RenderItem = ({ info }) => {
-    return <Text>{info.id}</Text>
+    if (info.username) {
+      return <UserItem user={info} />
+    } else if (info.description) {
+      return <TaskItem task={info} />
+    }
   }
 
   return (

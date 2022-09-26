@@ -7,6 +7,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { NavigationContainer } from '@react-navigation/native'
 import MainCondition from './src/route/MainCondition'
 import { injectStore } from './src/api/axios'
+import ProjectInfoList from './src/components/ProjectsComponents/ProjectInfoList'
 injectStore(store)
 
 export default function App() {
@@ -16,7 +17,8 @@ export default function App() {
         <NativeBaseProvider>
           <SafeAreaProvider>
             <NavigationContainer>
-              <MainCondition />
+              {/* {<MainCondition />} */}
+              <ProjectInfoList />
             </NavigationContainer>
           </SafeAreaProvider>
         </NativeBaseProvider>

@@ -5,7 +5,7 @@ const UserItem = ({ user }) => {
   return (
     <Pressable>
       <HStack alignItems='center' py={2} px={5}>
-        <UserAvatar avatar={user.avatar} />
+        <UserAvatar />
         <Text pl={4}>{user.username}</Text>
       </HStack>
     </Pressable>

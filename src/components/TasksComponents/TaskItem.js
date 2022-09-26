@@ -6,7 +6,7 @@ const TaskItem = ({ task }) => {
       <Box width='100%'>
         <HStack justifyContent='space-between'>
           <Text>{task.title}</Text>
-          <Text>{task.username}</Text>
+          <Text>{task.user?.username}</Text>
         </HStack>
       </Box>
     </Center>
