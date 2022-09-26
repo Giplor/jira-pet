@@ -1,41 +1,30 @@
 import { SectionList, Text } from 'native-base'
+import { useSelector } from 'react-redux'
+import { projectInfo } from '../../redux/selectors/selectors'
+import TaskItem from '../TasksComponents/TaskItem'
+import UserItem from '../UsersComponents/UserItem'
 
 const ProjectInfoList = () => {
-  const DATA = [
-    {
-      title: 'Aboba title',
-      data: [
-        { id: 5, desc: 'cool' },
-        { id: 6, desc: 'ccccc' },
-      ],
-    },
-    {
-      title: 'Chu title',
-      data: [
-        { id: 1, username: 'Prekol' },
-        { id: 2, username: 'Another prekol' },
-      ],
-    },
-  ]
+  const projectData = useSelector(projectInfo)
 
-  const ConditionRender = ({ dataInfo, title }) => {
-    console.log(title)
-    if (title === 'Aboba title') {
-      return <Text>{dataInfo.desc}</Text>
-    } else if (title === 'Chu title') {
-      return <Text>{dataInfo.username}</Text>
+  const ConditionRender = ({ projectData, title }) => {
+    if (title === 'Tasks') {
+      return <TaskItem task={projectData} />
+    } else if (title === 'Users') {
+      return <UserItem user={projectData} />
     }
   }
+
   const HeaderSection = ({ title }) => {
     return <Text fontSize='5xl'>{title}</Text>
   }
 
   return (
     <SectionList
-      sections={DATA}
+      sections={projectData}
       keyExtractor={(item) => item.id}
       renderItem={({ section, item }) => (
-        <ConditionRender dataInfo={item} title={section.title} />
+        <ConditionRender projectData={item} title={section.title} />
       )}
       renderSectionHeader={({ section: { title } }) => (
         <HeaderSection title={title} />
