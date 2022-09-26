@@ -25,8 +25,8 @@ const SignUpScreen = () => {
   }
 
   return (
-    <Center width='100%' safeArea>
-      <Box width='80%' maxWidth='260'>
+    <Box width='100%' maxWidth='260' safeArea>
+      <Center width='80%'>
         <VStack space='3'>
           <DefaultInput
             value={username.value}
@@ -60,8 +60,8 @@ const SignUpScreen = () => {
             Sign in
           </Button>
         </VStack>
-      </Box>
-    </Center>
+      </Center>
+    </Box>
   )
 }
 

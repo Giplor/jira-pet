@@ -26,7 +26,7 @@ export const projectInfo = createSelector(
   (project, tasksProject) => {
     return [
       { title: 'Tasks', data: [...tasksProject] },
-      { title: 'Users', data: [...project.users] },
+      { title: 'Developers', data: [...project.users] },
     ]
   }
 )

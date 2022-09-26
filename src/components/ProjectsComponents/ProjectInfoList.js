@@ -10,13 +10,13 @@ const ProjectInfoList = () => {
   const ConditionRender = ({ projectData, title }) => {
     if (title === 'Tasks') {
       return <TaskItem task={projectData} />
-    } else if (title === 'Users') {
+    } else if (title === 'Developers') {
       return <UserItem user={projectData} />
     }
   }
 
   const HeaderSection = ({ title }) => {
-    return <Text fontSize='5xl'>{title}</Text>
+    return <Text fontSize='3xl'>{title}</Text>
   }
 
   return (

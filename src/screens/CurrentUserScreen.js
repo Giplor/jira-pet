@@ -16,12 +16,11 @@ const CurrentUserScreen = () => {
 
   const currentUser = useSelector((state) => state.user.user)
   return (
-    <Center width='100%' height='90%' safeArea>
-      <Box width='80%'>
-        <VStack alignItems='center'>
-          <UserAvatar />
-          <Text>{currentUser?.username}</Text>
-          <Text>{currentUser?.email}</Text>
+    <Center width='100%' height='100%' safeArea>
+      <Box width='90%'>
+        <VStack alignItems='flex-start'>
+          <UserAvatar size='xl' />
+          <Text bold>{currentUser?.username}</Text>
           <ProjectsList data={projects} />
         </VStack>
       </Box>
