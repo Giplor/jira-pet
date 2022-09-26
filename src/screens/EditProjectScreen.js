@@ -1,4 +1,4 @@
-import { Box, Text } from 'native-base'
+import { Box, Button, Center, Text, VStack } from 'native-base'
 import { useSelector } from 'react-redux'
 import DefaultInput from '../components/UIComponents/DefaultInput'
 import { useValidation } from '../hooks/useValidation'
@@ -11,11 +11,15 @@ const EditProjectScreen = () => {
   const description = useValidation(project.description, 'Description')
 
   return (
-    <Box width='100%' safeArea>
-      <DefaultInput value={title.value} label='Title' />
-      <DefaultInput value={description.value} label='Description' />
-      <Text>asfsdsdpkgpsdkg</Text>
-    </Box>
+    <Center width='100%' safeArea>
+      <Box width='80%' maxWidth='260'>
+        <VStack justifyContent='space-between' space='3'>
+          <DefaultInput value={title.value} label='Title' />
+          <DefaultInput value={description.value} label='Description' />
+          <Button>Update project</Button>
+        </VStack>
+      </Box>
+    </Center>
   )
 }
 

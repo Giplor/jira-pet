@@ -27,8 +27,8 @@ const CreateNewProjectScreen = () => {
   }
 
   return (
-    <Box width='100%' maxWidth='260' safeArea>
-      <Center width='80%'>
+    <Center width='100%' safeArea>
+      <Box width='80%' maxWidth='260'>
         <VStack justifyContent='space-between' space='3'>
           <DefaultInput
             value={title.value}
@@ -52,8 +52,8 @@ const CreateNewProjectScreen = () => {
             Create project
           </Button>
         </VStack>
-      </Center>
-    </Box>
+      </Box>
+    </Center>
   )
 }
 

@@ -4,7 +4,7 @@ import UserAvatar from './UserAvatar'
 const UserItem = ({ user }) => {
   return (
     <Pressable>
-      <HStack alignItems='center' py={2} px={5}>
+      <HStack alignItems='center' py={2}>
         <UserAvatar />
         <Text pl={4}>{user.username}</Text>
       </HStack>
