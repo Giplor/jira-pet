@@ -9,7 +9,7 @@ const ProjectItem = ({ project }) => {
 
   const openProjectInfo = () => {
     dispatch(setProjectId(project.id))
-    navigation.navigate('ProjectInfo', { projectName: project.title })
+    navigation.navigate('ProjectInfo')
   }
 
   return (

@@ -31,7 +31,7 @@ export const createNewTask = createAsyncThunk(
       dispatch(fetchTasks())
     } catch (error) {
       console.log('error tasks/createTask')
-      console, log(error.response)
+      console, log(error.response.data)
     }
   }
 )

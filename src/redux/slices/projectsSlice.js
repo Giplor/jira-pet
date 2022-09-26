@@ -16,16 +16,20 @@ export const fetchProjects = createAsyncThunk(
 
 export const createNewProject = createAsyncThunk(
   'projects/createProject',
-  async ({ title, description }, { dispatch }) => {
+  async ({ title, description, callback }, { dispatch }) => {
     try {
+      dispatch(setLoading(true))
       await axiosInstance.post('/projects', {
         title,
         description,
       })
       dispatch(fetchProjects())
+      callback?.()
     } catch (error) {
       console.log('error projects/createProject')
-      console.log(error.response)
+      console.log(error.response.data)
+    } finally {
+      dispatch(setLoading(false))
     }
   }
 )
@@ -61,6 +65,7 @@ export const deleteProject = createAsyncThunk(
 
 const initialState = {
   projects: [],
+  isLoading: false,
 }
 
 const projectsSlice = createSlice({
@@ -70,9 +75,12 @@ const projectsSlice = createSlice({
     setProjects: (state, action) => {
       state.projects = action.payload
     },
+    setLoading: (state, action) => {
+      state.isLoading = action.payload
+    },
   },
 })
 
-export const { setProjects } = projectsSlice.actions
+export const { setProjects, setLoading } = projectsSlice.actions
 
 export default projectsSlice.reducer

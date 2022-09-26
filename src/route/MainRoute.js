@@ -1,10 +1,11 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
+import { Ionicons } from '@expo/vector-icons'
 import ProjectsScreen from '../screens/ProjectsScreen'
 import ProjectInfoScreen from '../screens/ProjectInfoScreen'
-import CurrentUserScreen from '../screens/CurrentUserScreen'
+import EditProjectScreen from '../screens/EditProjectScreen'
 import CreateNewProjectScreen from '../screens/CreateNewProjectScreen'
-import { Ionicons } from '@expo/vector-icons'
+import CurrentUserScreen from '../screens/CurrentUserScreen'
 import CreateNewTaskScreen from '../screens/CreateNewTaskScreen'
 
 const ProjectsStack = createNativeStackNavigator()
@@ -60,6 +61,7 @@ const MainRoute = () => {
   return (
     <MainStack.Navigator screenOptions={{ headerShown: false }}>
       <MainStack.Screen name='Main' component={TabRoute} />
+      <MainStack.Screen name='EditProject' component={EditProjectScreen} />
       <MainStack.Screen name='CreateNewProject' component={CreateNewProjectScreen} />
       <MainStack.Screen name='CreateNewTask' component={CreateNewTaskScreen} />
     </MainStack.Navigator>

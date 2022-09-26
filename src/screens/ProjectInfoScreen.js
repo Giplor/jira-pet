@@ -1,17 +1,52 @@
-import { Box, Heading, Fab, Icon, IconButton, Button } from 'native-base'
-import TasksList from '../components/TasksComponents/TasksList'
+import {
+  Box,
+  Heading,
+  Fab,
+  Icon,
+  IconButton,
+  HStack,
+  SectionList,
+  Text,
+} from 'native-base'
 import { AntDesign } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
+import EditButton from '../components/UIComponents/EditButton'
+import { useDispatch, useSelector } from 'react-redux'
+import { projectInfo, selectCurrentProject } from '../redux/selectors/selectors'
+import { useEffect } from 'react'
+import { fetchTasks } from '../redux/slices/tasksSlice'
 
-const ProjectInfoScreen = ({ route }) => {
+const ProjectInfoScreen = () => {
+  const dispatch = useDispatch()
   const navigation = useNavigation()
+  const project = useSelector(selectCurrentProject)
+  const dataProject = useSelector(projectInfo)
+
+  const goToEditProject = () => {
+    navigation.navigate('EditProject')
+  }
+
+  useEffect(() => {
+    dispatch(fetchTasks())
+  }, [])
+
+  const RenderItem = ({ info }) => {
+    return <Text>{info.id}</Text>
+  }
 
   return (
-    <Box width='100%' height='100%' safeArea>
-      <Heading>{route.params.projectName}</Heading>
-      <Button>EDIT</Button>
-      <TasksList />
+    <Box width='80%' height='100%' safeArea>
+      <HStack alignItems='center' justifyContent='space-between'>
+        <Heading>{project.title}</Heading>
+        <EditButton onPress={goToEditProject} />
+      </HStack>
       <IconButton icon={<Icon as={AntDesign} name='adduser' size='2xl' />} />
+      <SectionList
+        sections={dataProject}
+        keyExtractor={(item, index) => item + index}
+        renderItem={({ item }) => <RenderItem info={item} />}
+        renderSectionHeader={({ section: { title } }) => <Text>{title}</Text>}
+      />
       <Fab
         renderInPortal={false}
         icon={<Icon color='white' as={AntDesign} name='plus' size='xl' />}

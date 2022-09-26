@@ -45,8 +45,8 @@ const SignInScreen = () => {
           />
           <Button
             colorScheme='indigo'
-            isDisabled={!email.isValid || !password.isValid}
             onPress={handleSignIn}
+            isDisabled={!email.isValid || !password.isValid}
             isLoading={loading}
           >
             Sign in
