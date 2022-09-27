@@ -13,21 +13,19 @@ const ProjectItem = ({ project }) => {
   }
 
   return (
-    <Center>
-      <Pressable width='90%' onPress={openProjectInfo}>
-        <Box borderBottomWidth={1} py='2'>
-          <VStack>
-            <HStack justifyContent='space-between'>
-              <Text fontSize='xl' bold>
-                {project.title}
-              </Text>
-              <Text>Tasks: {project.task_count}</Text>
-            </HStack>
-            <Text color='coolGray.700'>{project.description}</Text>
-          </VStack>
-        </Box>
-      </Pressable>
-    </Center>
+    <Pressable width='100%' onPress={openProjectInfo}>
+      <Box borderBottomWidth={1} py='2'>
+        <VStack>
+          <HStack justifyContent='space-between'>
+            <Text fontSize='xl' bold>
+              {project.title}
+            </Text>
+            <Text>Tasks: {project.task_count}</Text>
+          </HStack>
+          <Text color='coolGray.700'>{project.description}</Text>
+        </VStack>
+      </Box>
+    </Pressable>
   )
 }
 

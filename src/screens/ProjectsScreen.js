@@ -1,5 +1,4 @@
-import { Box, Button, Fab, Icon } from 'native-base'
-import { handleLogOut } from '../redux/slices/signInSlice'
+import { Box, Center, Fab, Icon } from 'native-base'
 import { useDispatch, useSelector } from 'react-redux'
 import ProjectsList from '../components/ProjectsComponents/ProjectsList'
 import { AntDesign } from '@expo/vector-icons'
@@ -17,16 +16,17 @@ const ProjectsScreen = () => {
   }, [])
 
   return (
-    <Box width='100%' height='100%' safeArea>
-      <Button onPress={() => dispatch(handleLogOut())}>Log out</Button>
-      <ProjectsList data={projects} />
+    <Center width='100%' height='100%' safeArea>
+      <Box width='80%' height='100%'>
+        <ProjectsList data={projects} />
+      </Box>
       <Fab
         renderInPortal={false}
         icon={<Icon color='white' as={AntDesign} name='plus' size='xl' />}
         placement='bottom-right'
         onPress={() => navigation.navigate('CreateNewProject')}
       />
-    </Box>
+    </Center>
   )
 }
 

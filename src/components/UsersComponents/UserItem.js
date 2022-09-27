@@ -1,4 +1,4 @@
-import { HStack, Pressable, Text } from 'native-base'
+import { HStack, Text } from 'native-base'
 import UserAvatar from './UserAvatar'
 
 const UserItem = ({ user }) => {
