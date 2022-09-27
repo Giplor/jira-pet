@@ -9,7 +9,7 @@ export const fetchUsers = createAsyncThunk(
       dispatch(setUsers(answer.data))
     } catch (error) {
       console.log('error fetchUsers')
-      console.log(error.response)
+      console.log(error.response.data)
     }
   }
 )

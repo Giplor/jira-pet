@@ -36,7 +36,7 @@ export const createNewProject = createAsyncThunk(
 
 export const editProject = createAsyncThunk(
   'projects/editProject',
-  async ({ title, description }, { dispatch }) => {
+  async ({ projectId, title, description }, { dispatch }) => {
     try {
       await axiosInstance.put(`/projects/${projectId}`, {
         title,
@@ -45,7 +45,25 @@ export const editProject = createAsyncThunk(
       dispatch(fetchProjects())
     } catch (error) {
       console.log('error projects/editProject')
-      console.log(error.response)
+      console.log(error.response.data)
+    }
+  }
+)
+
+export const addUserToProject = createAsyncThunk(
+  'projects/addUserToProject',
+  async ({ userId, projectId }, { dispatch }) => {
+    try {
+      dispatch(setLoading(true))
+      await axiosInstance.post(`/projects/${projectId}/users`, {
+        user_id: userId,
+      })
+      dispatch(fetchProjects())
+    } catch (error) {
+      console.log('error projects/addUserToProject')
+      console.log(error.response.data)
+    } finally {
+      dispatch(setLoading(false))
     }
   }
 )

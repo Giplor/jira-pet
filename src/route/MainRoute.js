@@ -7,6 +7,7 @@ import EditProjectScreen from '../screens/EditProjectScreen'
 import CreateNewProjectScreen from '../screens/CreateNewProjectScreen'
 import CurrentUserScreen from '../screens/CurrentUserScreen'
 import CreateNewTaskScreen from '../screens/CreateNewTaskScreen'
+import AddUserScreen from '../screens/AddUserScreen'
 
 const ProjectsStack = createNativeStackNavigator()
 
@@ -64,6 +65,7 @@ const MainRoute = () => {
       <MainStack.Screen name='EditProject' component={EditProjectScreen} />
       <MainStack.Screen name='CreateNewProject' component={CreateNewProjectScreen} />
       <MainStack.Screen name='CreateNewTask' component={CreateNewTaskScreen} />
+      <MainStack.Screen name='AddUser' component={AddUserScreen} />
     </MainStack.Navigator>
   )
 }

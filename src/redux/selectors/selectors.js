@@ -4,6 +4,7 @@ export const selectAllProjects = (state) => state.projects.projects
 export const selectCurrentUserId = (state) => state.user.user?.id
 export const selectCurrentProjectId = (state) => state.tasks?.projectId
 export const selectAllProjectTasks = (state) => state.tasks?.tasks
+export const selectAllUsers = (state) => state.users?.users
 
 export const selectUserProjects = createSelector(
   [selectAllProjects, selectCurrentUserId],
@@ -21,7 +22,7 @@ export const selectCurrentProject = createSelector(
   }
 )
 
-export const projectInfo = createSelector(
+export const selectProjectInfo = createSelector(
   [selectCurrentProject, selectAllProjectTasks],
   (project, tasksProject) => {
     return [

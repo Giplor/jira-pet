@@ -1,5 +1,4 @@
-import { Box, Heading, Fab, Icon, HStack } from 'native-base'
-import { AntDesign } from '@expo/vector-icons'
+import { Box, Button, Heading, HStack } from 'native-base'
 import { useNavigation } from '@react-navigation/native'
 import EditButton from '../components/UIComponents/EditButton'
 import ProjectInfoList from '../components/ProjectsComponents/ProjectInfoList'
@@ -27,13 +26,8 @@ const ProjectInfoScreen = () => {
         <Heading>{project.title}</Heading>
         <EditButton onPress={goToEditProject} />
       </HStack>
+      <Button onPress={() => navigation.navigate('AddUser')}>ADD USER</Button>
       <ProjectInfoList />
-      <Fab
-        renderInPortal={false}
-        icon={<Icon color='white' as={AntDesign} name='plus' size='xl' />}
-        placement='bottom-right'
-        onPress={() => navigation.navigate('CreateNewTask')}
-      />
     </Box>
   )
 }
