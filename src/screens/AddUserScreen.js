@@ -1,25 +1,10 @@
 import { Center, Box, Text, FlatList, HStack, Button, Heading } from 'native-base'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectAllUsers, selectCurrentProject } from '../redux/selectors/selectors'
+import { selectAllUsers, selectCurrentProjectId } from '../redux/selectors/selectors'
 import { fetchUsers } from '../redux/slices/usersSlice'
 import { addUserToProject } from '../redux/slices/projectsSlice'
-import { useState } from 'react'
-
-const AddUserButton = ({ projectId, dispatch, user }) => {
-  const [isDisabled, setDisabled] = useState(false)
-
-  const addUser = () => {
-    console.log(user.id)
-    dispatch(addUserToProject({ userId: user.id, projectId }))
-    setDisabled(true)
-  }
-  return (
-    <Button isDisabled={isDisabled} onPress={addUser} height='10'>
-      ADD
-    </Button>
-  )
-}
+import UserAvatar from '../components/UsersComponents/UserAvatar'
 
 const RenderItem = ({ user, projectId, dispatch }) => {
   const addUser = () => {
@@ -28,12 +13,14 @@ const RenderItem = ({ user, projectId, dispatch }) => {
   }
   return (
     <Box width='100%'>
-      <HStack justifyContent='space-between' alignItems='center'>
-        <Text my='5'>{user.username}</Text>
-        <Button onPress={addUser} height='10'>
+      <HStack justifyContent='space-between' alignItems='center' py={3}>
+        <HStack justifyContent='space-between' alignItems='center'>
+          <UserAvatar />
+          <Text pl={4}>{user.username}</Text>
+        </HStack>
+        <Button onPress={addUser} width='20' height='6'>
           ADD
         </Button>
-        {/* <AddUserButton projectId={projectId} dispatch={dispatch} user={user} /> */}
       </HStack>
     </Box>
   )
@@ -42,24 +29,24 @@ const RenderItem = ({ user, projectId, dispatch }) => {
 const AddUserScreen = () => {
   const dispatch = useDispatch()
   const users = useSelector(selectAllUsers)
-  const project = useSelector(selectCurrentProject)
+  const projectId = useSelector(selectCurrentProjectId)
 
   useEffect(() => {
     dispatch(fetchUsers())
   }, [])
-  console.log('render')
+
   return (
     <Center width='100%' height='100%' safeArea>
       <Box width='80%' height='100%'>
-        <Heading>Add user to {project.title}</Heading>
-        <Text>Choice user:</Text>
+        <Heading>Add user</Heading>
         <FlatList
           data={users}
           renderItem={({ item }) => (
-            <RenderItem user={item} projectId={project.id} dispatch={dispatch} />
+            <RenderItem user={item} projectId={projectId} dispatch={dispatch} />
           )}
           keyExtractor={(item) => item.id}
           showsVerticalScrollIndicator={false}
+          maxToRenderPerBatch={10}
         />
       </Box>
     </Center>

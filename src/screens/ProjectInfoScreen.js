@@ -1,7 +1,6 @@
 import { Box, Button, Heading, HStack } from 'native-base'
 import { useNavigation } from '@react-navigation/native'
 import EditButton from '../components/UIComponents/EditButton'
-import ProjectInfoList from '../components/ProjectsComponents/ProjectInfoList'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectCurrentProject } from '../redux/selectors/selectors'
 import { useEffect } from 'react'
@@ -27,7 +26,6 @@ const ProjectInfoScreen = () => {
         <EditButton onPress={goToEditProject} />
       </HStack>
       <Button onPress={() => navigation.navigate('AddUser')}>ADD USER</Button>
-      <ProjectInfoList />
     </Box>
   )
 }

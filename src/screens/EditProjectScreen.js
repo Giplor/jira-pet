@@ -21,7 +21,6 @@ const EditProjectScreen = () => {
       })
     )
   }
-  console.log('render')
 
   return (
     <Center width='100%' safeArea>
