@@ -22,11 +22,18 @@ const AddUserButton = ({ projectId, dispatch, user }) => {
 }
 
 const RenderItem = ({ user, projectId, dispatch }) => {
+  const addUser = () => {
+    console.log(user.id)
+    dispatch(addUserToProject({ userId: user.id, projectId }))
+  }
   return (
     <Box width='100%'>
       <HStack justifyContent='space-between' alignItems='center'>
         <Text my='5'>{user.username}</Text>
-        <AddUserButton projectId={projectId} dispatch={dispatch} user={user} />
+        <Button onPress={addUser} height='10'>
+          ADD
+        </Button>
+        {/* <AddUserButton projectId={projectId} dispatch={dispatch} user={user} /> */}
       </HStack>
     </Box>
   )
@@ -52,7 +59,6 @@ const AddUserScreen = () => {
             <RenderItem user={item} projectId={project.id} dispatch={dispatch} />
           )}
           keyExtractor={(item) => item.id}
-          maxToRenderPerBatch={10}
           showsVerticalScrollIndicator={false}
         />
       </Box>
