@@ -1,7 +1,8 @@
 import { useNavigation } from '@react-navigation/native'
-import { Text, Box, HStack, VStack, Pressable, Center } from 'native-base'
+import { Text, Box, HStack, VStack, Pressable } from 'native-base'
 import { setProjectId } from '../../redux/slices/tasksSlice'
 import { useDispatch } from 'react-redux'
+import ThreeDots from '../UIComponents/ThreeDots'
 
 const ProjectItem = ({ project }) => {
   const navigation = useNavigation()
@@ -21,6 +22,7 @@ const ProjectItem = ({ project }) => {
               {project.title}
             </Text>
             <Text>Tasks: {project.task_count}</Text>
+            <ThreeDots />
           </HStack>
           <Text color='coolGray.700'>{project.description}</Text>
         </VStack>

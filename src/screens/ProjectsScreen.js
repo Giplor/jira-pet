@@ -5,12 +5,13 @@ import { AntDesign } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { useEffect } from 'react'
 import { fetchProjects } from '../redux/slices/projectsSlice'
+import { selectAllProjects } from '../redux/selectors/selectors'
 
 const ProjectsScreen = () => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
-  const projects = useSelector((state) => state.projects.projects)
-
+  const projects = useSelector(selectAllProjects)
+  console.log('render')
   useEffect(() => {
     dispatch(fetchProjects())
   }, [])

@@ -21,7 +21,7 @@ const CurrentUserScreen = () => {
       <Box width='90%'>
         <HStack justifyContent='space-between'>
           <VStack alignItems='flex-start'>
-            <UserAvatar size='xl' />
+            <UserAvatar size='xl' username={currentUser?.username} />
             <Text bold>{currentUser?.username}</Text>
           </VStack>
           <Box>

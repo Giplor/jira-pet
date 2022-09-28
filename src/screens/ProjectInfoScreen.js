@@ -1,4 +1,13 @@
-import { Box, Button, Heading, HStack, FlatList, Text, VStack } from 'native-base'
+import {
+  Box,
+  Button,
+  Heading,
+  HStack,
+  FlatList,
+  Text,
+  VStack,
+  Center,
+} from 'native-base'
 import { useNavigation } from '@react-navigation/native'
 import EditButton from '../components/UIComponents/EditButton'
 import { useDispatch, useSelector } from 'react-redux'
@@ -7,20 +16,34 @@ import {
   selectAllProjectTasks,
 } from '../redux/selectors/selectors'
 import { useEffect } from 'react'
-import { fetchTasks } from '../redux/slices/tasksSlice'
+import { deleteTask, fetchTasks } from '../redux/slices/tasksSlice'
 import UserAvatar from '../components/UsersComponents/UserAvatar'
 
 const RenderTaskItem = ({ task }) => {
+  const dispatch = useDispatch()
+
+  const handleDeleteTask = () => {
+    dispatch(deleteTask(task.id))
+  }
+
   return (
-    <>
-      <HStack justifyContent='space-between' alignItems='center'>
-        <VStack>
-          <Text>{task.title}</Text>
-          <Text>{task.description}</Text>
-        </VStack>
-        <UserAvatar size='sm' username={task?.user?.username} />
-      </HStack>
-    </>
+    <Center py='2'>
+      <Box width='80%' rounded='lg' p='2' borderBottomWidth={1}>
+        <HStack justifyContent='space-between' alignItems='flex-end'>
+          <VStack flex={1}>
+            <Text>{task.title}</Text>
+            <Text>{task.description}</Text>
+          </VStack>
+          <UserAvatar size='sm' username={task?.user?.username} />
+        </HStack>
+        <Button.Group alignSelf='flex-end'>
+          <Button>EDIT</Button>
+          <Button colorScheme='danger' onPress={handleDeleteTask}>
+            Delete
+          </Button>
+        </Button.Group>
+      </Box>
+    </Center>
   )
 }
 
@@ -39,7 +62,7 @@ const ProjectInfoScreen = () => {
   }, [])
 
   return (
-    <Box width='80%' height='100%' safeArea>
+    <Box flex={1} safeArea>
       <HStack alignItems='center' justifyContent='space-between'>
         <Heading>{project.title}</Heading>
         <EditButton onPress={goToEditProject} />
