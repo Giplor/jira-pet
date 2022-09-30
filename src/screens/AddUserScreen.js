@@ -6,16 +6,18 @@ import { fetchUsers } from '../redux/slices/usersSlice'
 import { addUserToProject } from '../redux/slices/projectsSlice'
 import UserAvatar from '../components/UsersComponents/UserAvatar'
 
-const RenderItem = ({ user, projectId, dispatch }) => {
+const RenderItem = ({ user, projectId }) => {
+  const dispatch = useDispatch()
+
   const addUser = () => {
     console.log(user.id)
-    dispatch(addUserToProject({ userId: user.id, projectId }))
+    // dispatch(addUserToProject({ userId: user.id, projectId }))
   }
   return (
     <Box width='100%'>
-      <HStack justifyContent='space-between' alignItems='center' py={3}>
+      <HStack justifyContent='space-between' alignItems='center' py={6}>
         <HStack justifyContent='space-between' alignItems='center'>
-          <UserAvatar />
+          {/* <UserAvatar username={user.username} /> */}
           <Text pl={4}>{user.username}</Text>
         </HStack>
         <Button onPress={addUser} width='20' height='6'>
@@ -34,6 +36,7 @@ const AddUserScreen = () => {
   useEffect(() => {
     dispatch(fetchUsers())
   }, [])
+  console.log('render')
 
   return (
     <Center width='100%' height='100%' safeArea>
@@ -41,12 +44,10 @@ const AddUserScreen = () => {
         <Heading>Add user</Heading>
         <FlatList
           data={users}
-          renderItem={({ item }) => (
-            <RenderItem user={item} projectId={projectId} dispatch={dispatch} />
-          )}
+          renderItem={({ item }) => <RenderItem user={item} projectId={projectId} />}
           keyExtractor={(item) => item.id}
           showsVerticalScrollIndicator={false}
-          maxToRenderPerBatch={10}
+          maxToRenderPerBatch={5}
         />
       </Box>
     </Center>

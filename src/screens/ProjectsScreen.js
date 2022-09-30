@@ -11,13 +11,13 @@ const ProjectsScreen = () => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
   const projects = useSelector(selectAllProjects)
-  console.log('render')
+
   useEffect(() => {
     dispatch(fetchProjects())
   }, [])
 
   return (
-    <Center width='100%' height='100%' safeArea>
+    <Center flex={1} safeArea>
       <Box width='80%' height='100%'>
         <ProjectsList data={projects} />
       </Box>

@@ -1,4 +1,4 @@
-import { Box, FlatList } from 'native-base'
+import { Box, FlatList, Text } from 'native-base'
 import ProjectItem from './ProjectItem'
 
 const ProjectsList = ({ data }) => {

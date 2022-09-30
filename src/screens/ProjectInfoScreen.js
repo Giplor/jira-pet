@@ -1,33 +1,21 @@
-import {
-  Box,
-  Button,
-  Heading,
-  HStack,
-  FlatList,
-  Text,
-  VStack,
-  Center,
-} from 'native-base'
+import { Box, Heading, HStack, FlatList, Text, VStack, Center } from 'native-base'
 import { useNavigation } from '@react-navigation/native'
-import EditButton from '../components/UIComponents/EditButton'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   selectCurrentProject,
   selectAllProjectTasks,
 } from '../redux/selectors/selectors'
+import { deleteProject } from '../redux/slices/projectsSlice'
 import { useEffect } from 'react'
-import { deleteTask, fetchTasks } from '../redux/slices/tasksSlice'
+import { fetchTasks } from '../redux/slices/tasksSlice'
 import UserAvatar from '../components/UsersComponents/UserAvatar'
+import AddUserIcon from '../components/UIComponents/AddUserIcon'
+import DeleteIcon from '../components/UIComponents/DeleteIcon'
+import EditIcon from '../components/UIComponents/EditIcon'
 
 const RenderTaskItem = ({ task }) => {
-  const dispatch = useDispatch()
-
-  const handleDeleteTask = () => {
-    dispatch(deleteTask(task.id))
-  }
-
   return (
-    <Center py='2'>
+    <Center py='2' width='100%'>
       <Box width='80%' rounded='lg' p='2' borderBottomWidth={1}>
         <HStack justifyContent='space-between' alignItems='flex-end'>
           <VStack flex={1}>
@@ -36,12 +24,6 @@ const RenderTaskItem = ({ task }) => {
           </VStack>
           <UserAvatar size='sm' username={task?.user?.username} />
         </HStack>
-        <Button.Group alignSelf='flex-end'>
-          <Button>EDIT</Button>
-          <Button colorScheme='danger' onPress={handleDeleteTask}>
-            Delete
-          </Button>
-        </Button.Group>
       </Box>
     </Center>
   )
@@ -57,22 +39,28 @@ const ProjectInfoScreen = () => {
     navigation.navigate('EditProject')
   }
 
+  const deleteThisProject = () => {
+    navigation.navigate('Projects')
+    dispatch(deleteProject(project.id))
+  }
+
   useEffect(() => {
     dispatch(fetchTasks())
   }, [])
 
   return (
     <Box flex={1} safeArea>
-      <HStack alignItems='center' justifyContent='space-between'>
-        <Heading>{project.title}</Heading>
-        <EditButton onPress={goToEditProject} />
+      <HStack alignSelf='flex-end' alignItems='center'>
+        <AddUserIcon />
+        <DeleteIcon onPress={deleteThisProject} />
+        <EditIcon onPress={goToEditProject} />
       </HStack>
-      <Button onPress={() => navigation.navigate('AddUser')}>ADD USER</Button>
+      <Heading>{project.title}</Heading>
+      <Text>Tasks - {tasks.length}</Text>
       <FlatList
         data={tasks}
         renderItem={({ item }) => <RenderTaskItem task={item} />}
         keyExtractor={(item) => item.id}
-        ListHeaderComponent={<Text>Tasks - {tasks.length}</Text>}
       />
     </Box>
   )
