@@ -83,6 +83,7 @@ export const deleteProject = createAsyncThunk(
 
 const initialState = {
   projects: [],
+  projectId: '',
   isLoading: false,
 }
 
@@ -93,12 +94,15 @@ const projectsSlice = createSlice({
     setProjects: (state, action) => {
       state.projects = action.payload
     },
+    setProjectId: (state, action) => {
+      state.projectId = action.payload
+    },
     setLoading: (state, action) => {
       state.isLoading = action.payload
     },
   },
 })
 
-export const { setProjects, setLoading } = projectsSlice.actions
+export const { setProjects, setProjectId, setLoading } = projectsSlice.actions
 
 export default projectsSlice.reducer

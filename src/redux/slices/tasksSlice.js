@@ -5,7 +5,7 @@ export const fetchTasks = createAsyncThunk(
   'tasks/fetchTasks',
   async (_, { dispatch, getState }) => {
     try {
-      const projectId = await getState().tasks.projectId
+      const projectId = await getState().projects.projectId
       const answer = await axiosInstance.get(`projects/${projectId}/tasks`)
       dispatch(setTasks(answer.data.tasks))
     } catch (error) {
@@ -20,7 +20,7 @@ export const createNewTask = createAsyncThunk(
   'tasks/createTask',
   async ({ title, description }, { dispatch, getState }) => {
     try {
-      const projectId = getState().tasks.projectId
+      const projectId = getState().projects.projectId
       await axiosInstance.post(`projects/${projectId}/tasks`, {
         title,
         description,
@@ -40,7 +40,7 @@ export const deleteTask = createAsyncThunk(
   'tasks/deleteTask',
   async (id, { dispatch, getState }) => {
     try {
-      const projectId = getState().tasks.projectId
+      const projectId = getState().projects.projectId
       await axiosInstance.delete(`projects/${projectId}/tasks/${id}`)
       dispatch(fetchTasks())
     } catch (error) {
@@ -52,7 +52,7 @@ export const deleteTask = createAsyncThunk(
 
 const initialState = {
   tasks: [],
-  projectId: '',
+  taskId: '',
 }
 
 const tasksSlice = createSlice({
@@ -62,12 +62,12 @@ const tasksSlice = createSlice({
     setTasks: (state, action) => {
       state.tasks = action.payload
     },
-    setProjectId: (state, action) => {
-      state.projectId = action.payload
+    setTaskId: (state, action) => {
+      state.taskId = action.payload
     },
   },
 })
 
-export const { setTasks, setProjectId } = tasksSlice.actions
+export const { setTasks } = tasksSlice.actions
 
 export default tasksSlice.reducer

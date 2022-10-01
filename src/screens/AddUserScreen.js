@@ -1,56 +1,57 @@
-import { Center, Box, Text, FlatList, HStack, Button, Heading } from 'native-base'
+import { Box, Button, FlatList, HStack, Text } from 'native-base'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { selectAllUsers, selectCurrentProjectId } from '../redux/selectors/selectors'
+import {
+  selectAllUsers,
+  selectCurrentProjectId,
+  selectUsersNotInProject,
+} from '../redux/selectors/selectors'
 import { fetchUsers } from '../redux/slices/usersSlice'
 import { addUserToProject } from '../redux/slices/projectsSlice'
-import UserAvatar from '../components/UsersComponents/UserAvatar'
+import { memo } from 'react'
 
-const RenderItem = ({ user, projectId }) => {
+const RenderUserItem = memo(({ user, projectId }) => {
   const dispatch = useDispatch()
 
   const addUser = () => {
-    console.log(user.id)
-    // dispatch(addUserToProject({ userId: user.id, projectId }))
+    dispatch(addUserToProject({ userId: user.id, projectId }))
   }
+
   return (
-    <Box width='100%'>
-      <HStack justifyContent='space-between' alignItems='center' py={6}>
-        <HStack justifyContent='space-between' alignItems='center'>
-          {/* <UserAvatar username={user.username} /> */}
-          <Text pl={4}>{user.username}</Text>
-        </HStack>
-        <Button onPress={addUser} width='20' height='6'>
-          ADD
-        </Button>
+    <Box width='80%' borderBottomWidth={1} py='4'>
+      <HStack justifyContent='space-between'>
+        <Text>{user.username}</Text>
+        <Button onPress={addUser}>Press</Button>
       </HStack>
     </Box>
+  )
+})
+
+const UsersList = ({ data }) => {
+  const projectId = useSelector(selectCurrentProjectId)
+  return (
+    <FlatList
+      data={data}
+      renderItem={({ item }) => <RenderUserItem user={item} projectId={projectId} />}
+      keyExtractor={(item) => item.id}
+      showsVerticalScrollIndicator={false}
+      maxToRenderPerBatch={1}
+    />
   )
 }
 
 const AddUserScreen = () => {
   const dispatch = useDispatch()
-  const users = useSelector(selectAllUsers)
-  const projectId = useSelector(selectCurrentProjectId)
+  const users = useSelector(selectUsersNotInProject)
 
   useEffect(() => {
     dispatch(fetchUsers())
   }, [])
-  console.log('render')
 
   return (
-    <Center width='100%' height='100%' safeArea>
-      <Box width='80%' height='100%'>
-        <Heading>Add user</Heading>
-        <FlatList
-          data={users}
-          renderItem={({ item }) => <RenderItem user={item} projectId={projectId} />}
-          keyExtractor={(item) => item.id}
-          showsVerticalScrollIndicator={false}
-          maxToRenderPerBatch={5}
-        />
-      </Box>
-    </Center>
+    <Box flex={1} safeArea>
+      <UsersList data={users} />
+    </Box>
   )
 }
 

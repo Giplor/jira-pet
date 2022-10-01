@@ -1,31 +1,33 @@
-import { Box, Heading, HStack, FlatList, Text, VStack, Center } from 'native-base'
+import { Box, Heading, HStack, Text, VStack, Center } from 'native-base'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
-import {
-  selectCurrentProject,
-  selectAllProjectTasks,
-} from '../redux/selectors/selectors'
+import { selectCurrentProject } from '../redux/selectors/selectors'
 import { deleteProject } from '../redux/slices/projectsSlice'
-import { useEffect } from 'react'
-import { fetchTasks } from '../redux/slices/tasksSlice'
-import UserAvatar from '../components/UsersComponents/UserAvatar'
 import AddUserIcon from '../components/UIComponents/AddUserIcon'
 import DeleteIcon from '../components/UIComponents/DeleteIcon'
 import EditIcon from '../components/UIComponents/EditIcon'
+import ProjectUsers from '../components/ProjectUsers'
+import ProjectTasks from '../components/ProjectTasks'
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs'
+import { useEffect } from 'react'
+import { fetchTasks } from '../redux/slices/tasksSlice'
 
-const RenderTaskItem = ({ task }) => {
+const ProjectInfoTab = createMaterialTopTabNavigator()
+
+const ProjectInfoTabScreen = () => {
   return (
-    <Center py='2' width='100%'>
-      <Box width='80%' rounded='lg' p='2' borderBottomWidth={1}>
-        <HStack justifyContent='space-between' alignItems='flex-end'>
-          <VStack flex={1}>
-            <Text>{task.title}</Text>
-            <Text>{task.description}</Text>
-          </VStack>
-          <UserAvatar size='sm' username={task?.user?.username} />
-        </HStack>
-      </Box>
-    </Center>
+    <ProjectInfoTab.Navigator screenOptions={{}}>
+      <ProjectInfoTab.Screen
+        name='TasksProject'
+        component={ProjectTasks}
+        options={{ tabBarLabel: 'Tasks' }}
+      />
+      <ProjectInfoTab.Screen
+        name='ProjectUsers'
+        component={ProjectUsers}
+        options={{ tabBarLabel: 'Users' }}
+      />
+    </ProjectInfoTab.Navigator>
   )
 }
 
@@ -33,7 +35,12 @@ const ProjectInfoScreen = () => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
   const project = useSelector(selectCurrentProject)
-  const tasks = useSelector(selectAllProjectTasks)
+
+  useEffect(() => dispatch(fetchTasks()))
+
+  const goToAddUser = () => {
+    navigation.navigate('AddUser')
+  }
 
   const goToEditProject = () => {
     navigation.navigate('EditProject')
@@ -44,24 +51,18 @@ const ProjectInfoScreen = () => {
     dispatch(deleteProject(project.id))
   }
 
-  useEffect(() => {
-    dispatch(fetchTasks())
-  }, [])
-
   return (
     <Box flex={1} safeArea>
       <HStack alignSelf='flex-end' alignItems='center'>
-        <AddUserIcon />
+        <AddUserIcon onPress={goToAddUser} />
         <DeleteIcon onPress={deleteThisProject} />
         <EditIcon onPress={goToEditProject} />
       </HStack>
       <Heading>{project.title}</Heading>
-      <Text>Tasks - {tasks.length}</Text>
-      <FlatList
-        data={tasks}
-        renderItem={({ item }) => <RenderTaskItem task={item} />}
-        keyExtractor={(item) => item.id}
-      />
+      <Box width='100%' height='10%' maxHeight='70'>
+        <Text>{project.description}</Text>
+      </Box>
+      <ProjectInfoTabScreen />
     </Box>
   )
 }

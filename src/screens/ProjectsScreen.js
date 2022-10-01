@@ -1,13 +1,49 @@
-import { Box, Center, Fab, FlatList, Icon } from 'native-base'
+import {
+  Box,
+  Center,
+  Fab,
+  FlatList,
+  HStack,
+  Icon,
+  Pressable,
+  VStack,
+  Text,
+} from 'native-base'
 import { useDispatch, useSelector } from 'react-redux'
-import ProjectsList from '../components/ProjectsComponents/ProjectsList'
 import { AntDesign } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { useEffect } from 'react'
-import { fetchProjects } from '../redux/slices/projectsSlice'
+import { fetchProjects, setProjectId } from '../redux/slices/projectsSlice'
 import { selectAllProjects } from '../redux/selectors/selectors'
 
-const ProjectList = ({ data }) => {
+const RenderProjectItem = ({ project }) => {
+  const navigation = useNavigation()
+  const dispatch = useDispatch()
+
+  const openProjectInfo = () => {
+    dispatch(setProjectId(project.id))
+    console.log(project.id)
+    navigation.navigate('ProjectInfo')
+  }
+
+  return (
+    <Pressable width='100%' onPress={openProjectInfo}>
+      <Box borderBottomWidth={1} py='2'>
+        <VStack>
+          <HStack justifyContent='space-between'>
+            <Text fontSize='xl' bold>
+              {project.title}
+            </Text>
+            <Text>Tasks: {project.task_count}</Text>
+          </HStack>
+          <Text color='coolGray.700'>{project.description}</Text>
+        </VStack>
+      </Box>
+    </Pressable>
+  )
+}
+
+const ProjectsList = ({ data }) => {
   return (
     <FlatList
       data={data}

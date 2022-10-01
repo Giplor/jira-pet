@@ -1,7 +1,11 @@
-import { Text } from 'native-base'
+import { Text, Box } from 'native-base'
 
 const TaskInfoScreen = () => {
-  return <Text>DFGDFGDFGDFGDFG</Text>
+  return (
+    <Box safeArea>
+      <Text>TaskInfo</Text>
+    </Box>
+  )
 }
 
 export default TaskInfoScreen
