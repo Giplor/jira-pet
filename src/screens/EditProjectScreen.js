@@ -10,6 +10,7 @@ const EditProjectScreen = () => {
   const dispatch = useDispatch()
   const project = useSelector(selectCurrentProject)
   const navigation = useNavigation()
+  const loading = useSelector((state) => state.projects.isLoading)
 
   const title = useValidation(project.title)
   const description = useValidation(project.description)
@@ -20,9 +21,9 @@ const EditProjectScreen = () => {
         projectId: project.id,
         title: title.value,
         description: description.value,
+        callback: () => navigation.navigate('Main', 'ProjectInfo'),
       })
     )
-    navigation.navigate('Main', 'ProjectInfo')
   }
 
   return (
@@ -44,6 +45,7 @@ const EditProjectScreen = () => {
           <Button
             onPress={submitEditProject}
             isDisabled={!title.value || !description.value}
+            isLoading={loading}
           >
             Update project
           </Button>
