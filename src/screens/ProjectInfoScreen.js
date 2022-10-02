@@ -99,8 +99,12 @@ const ProjectInfoScreen = () => {
   }
 
   const deleteThisProject = () => {
-    navigation.navigate('Projects')
-    dispatch(deleteProject({ id: project.id }))
+    dispatch(
+      deleteProject({
+        id: project.id,
+        callback: () => navigation.navigate('Projects'),
+      })
+    )
   }
   if (loading) {
     return (

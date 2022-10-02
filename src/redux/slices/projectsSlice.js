@@ -29,10 +29,9 @@ export const createNewProject = createAsyncThunk(
       dispatch(fetchProjects())
       callback?.()
     } catch (error) {
+      dispatch(setLoading(false))
       console.log('error projects/createProject')
       console.log(error.response.data)
-    } finally {
-      dispatch(setLoading(false))
     }
   }
 )
@@ -49,10 +48,9 @@ export const editProject = createAsyncThunk(
       dispatch(fetchProjects())
       callback?.()
     } catch (error) {
+      dispatch(setLoading(false))
       console.log('error projects/editProject')
       console.log(error.response.data)
-    } finally {
-      dispatch(setLoading(false))
     }
   }
 )
@@ -74,10 +72,11 @@ export const addUserToProject = createAsyncThunk(
 
 export const deleteProject = createAsyncThunk(
   'projects/deleteProject',
-  async ({ id }, { dispatch }) => {
+  async ({ id, callback }, { dispatch }) => {
     try {
       dispatch(setLoading(true))
       await axiosInstance.delete(`/projects/${id}`)
+      callback?.()
       dispatch(fetchProjects())
     } catch (error) {
       console.log('error projects/deleteProject')
