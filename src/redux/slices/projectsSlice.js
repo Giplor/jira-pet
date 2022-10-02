@@ -5,11 +5,14 @@ export const fetchProjects = createAsyncThunk(
   'projects/fetchProjects',
   async (_, { dispatch }) => {
     try {
+      dispatch(setLoading(true))
       const answer = await axiosInstance.get('/projects')
       dispatch(setProjects(answer.data))
     } catch (error) {
       console.log('error projects/fetchProjects')
       console.log(error.response)
+    } finally {
+      dispatch(setLoading(false))
     }
   }
 )
@@ -54,7 +57,6 @@ export const addUserToProject = createAsyncThunk(
   'projects/addUserToProject',
   async ({ userId, projectId }, { dispatch }) => {
     try {
-      dispatch(setLoading(true))
       await axiosInstance.post(`/projects/${projectId}/users`, {
         user_id: userId,
       })
@@ -62,16 +64,15 @@ export const addUserToProject = createAsyncThunk(
     } catch (error) {
       console.log('error projects/addUserToProject')
       console.log(error.response.data)
-    } finally {
-      dispatch(setLoading(false))
     }
   }
 )
 
 export const deleteProject = createAsyncThunk(
   'projects/deleteProject',
-  async (id, { dispatch }) => {
+  async ({ id }, { dispatch }) => {
     try {
+      dispatch(setLoading(true))
       await axiosInstance.delete(`/projects/${id}`)
       dispatch(fetchProjects())
     } catch (error) {

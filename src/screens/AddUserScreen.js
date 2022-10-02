@@ -1,8 +1,7 @@
 import { Box, Button, FlatList, HStack, Text } from 'native-base'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-  selectAllUsers,
   selectCurrentProjectId,
   selectUsersNotInProject,
 } from '../redux/selectors/selectors'
@@ -12,8 +11,10 @@ import { memo } from 'react'
 
 const RenderUserItem = memo(({ user, projectId }) => {
   const dispatch = useDispatch()
+  const [isLoading, setLoading] = useState(false)
 
   const addUser = () => {
+    setLoading(true)
     dispatch(addUserToProject({ userId: user.id, projectId }))
   }
 
@@ -21,7 +22,9 @@ const RenderUserItem = memo(({ user, projectId }) => {
     <Box width='80%' borderBottomWidth={1} py='4'>
       <HStack justifyContent='space-between'>
         <Text>{user.username}</Text>
-        <Button onPress={addUser}>Press</Button>
+        <Button onPress={addUser} isLoading={isLoading}>
+          Add
+        </Button>
       </HStack>
     </Box>
   )

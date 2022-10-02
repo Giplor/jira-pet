@@ -3,7 +3,7 @@ import axiosInstance from '../../api/axios'
 
 export const fetchTasks = createAsyncThunk(
   'tasks/fetchTasks',
-  async (_, { dispatch, getState }) => {
+  async ({ callback }, { dispatch, getState }) => {
     try {
       const projectId = await getState().projects.projectId
       const answer = await axiosInstance.get(`projects/${projectId}/tasks`)
@@ -12,26 +12,30 @@ export const fetchTasks = createAsyncThunk(
       console.log('error taksks/fetchTasks')
       console.log(error.response)
     } finally {
+      callback?.()
     }
   }
 )
 
 export const createNewTask = createAsyncThunk(
   'tasks/createTask',
-  async ({ title, description }, { dispatch, getState }) => {
+  async ({ title, description, userId }, { dispatch, getState }) => {
     try {
+      dispatch(setLoading(true))
       const projectId = getState().projects.projectId
       await axiosInstance.post(`projects/${projectId}/tasks`, {
         title,
         description,
         status_id: 1,
         type_id: 1,
-        user_id: 72,
+        user_id: userId,
       })
       dispatch(fetchTasks())
     } catch (error) {
       console.log('error tasks/createTask')
-      console, log(error.response.data)
+      console.log(error.response.data)
+    } finally {
+      dispatch(setLoading(false))
     }
   }
 )
@@ -53,6 +57,7 @@ export const deleteTask = createAsyncThunk(
 const initialState = {
   tasks: [],
   taskId: '',
+  isLoading: false,
 }
 
 const tasksSlice = createSlice({
@@ -65,9 +70,12 @@ const tasksSlice = createSlice({
     setTaskId: (state, action) => {
       state.taskId = action.payload
     },
+    setLoading: (state, action) => {
+      state.isLoading = action.payload
+    },
   },
 })
 
-export const { setTasks } = tasksSlice.actions
+export const { setTasks, setTaskId, setLoading } = tasksSlice.actions
 
 export default tasksSlice.reducer

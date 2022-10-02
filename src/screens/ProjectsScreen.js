@@ -8,26 +8,31 @@ import {
   Pressable,
   VStack,
   Text,
+  Spinner,
 } from 'native-base'
 import { useDispatch, useSelector } from 'react-redux'
 import { AntDesign } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
-import { useEffect } from 'react'
+import { useEffect, memo } from 'react'
 import { fetchProjects, setProjectId } from '../redux/slices/projectsSlice'
 import { selectAllProjects } from '../redux/selectors/selectors'
 
-const RenderProjectItem = ({ project }) => {
+const RenderProjectItem = memo(({ project }) => {
   const navigation = useNavigation()
   const dispatch = useDispatch()
 
   const openProjectInfo = () => {
     dispatch(setProjectId(project.id))
-    console.log(project.id)
     navigation.navigate('ProjectInfo')
   }
 
   return (
-    <Pressable width='100%' onPress={openProjectInfo}>
+    <Pressable
+      width='100%'
+      onPress={openProjectInfo}
+      _pressed={{ backgroundColor: 'coolGray.200' }}
+      _disabled={{ backgroundColor: 'orange.500' }}
+    >
       <Box borderBottomWidth={1} py='2'>
         <VStack>
           <HStack justifyContent='space-between'>
@@ -41,12 +46,13 @@ const RenderProjectItem = ({ project }) => {
       </Box>
     </Pressable>
   )
-}
+})
 
-const ProjectsList = ({ data }) => {
+const ProjectsList = () => {
+  const projects = useSelector(selectAllProjects)
   return (
     <FlatList
-      data={data}
+      data={projects}
       renderItem={({ item }) => <RenderProjectItem project={item} />}
       keyExtractor={(item) => item.id}
       showsVerticalScrollIndicator={false}
@@ -57,16 +63,24 @@ const ProjectsList = ({ data }) => {
 const ProjectsScreen = () => {
   const dispatch = useDispatch()
   const navigation = useNavigation()
-  const projects = useSelector(selectAllProjects)
+  const loading = useSelector((state) => state.projects.isLoading)
 
   useEffect(() => {
     dispatch(fetchProjects())
   }, [])
 
+  if (loading) {
+    return (
+      <Center flex={1}>
+        <Spinner size='lg' />
+      </Center>
+    )
+  }
+
   return (
     <Center flex={1} safeArea>
       <Box width='80%' height='100%'>
-        <ProjectsList data={projects} />
+        <ProjectsList />
       </Box>
       <Fab
         renderInPortal={false}

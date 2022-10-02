@@ -1,6 +1,6 @@
-import { Icon, IconButton, AlertDialog, Button, Center } from 'native-base'
+import { Icon, IconButton, AlertDialog, Button } from 'native-base'
 import { useState } from 'react'
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { AntDesign } from '@expo/vector-icons'
 
 const DeleteIcon = ({ onPress }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -10,7 +10,7 @@ const DeleteIcon = ({ onPress }) => {
   return (
     <>
       <IconButton
-        icon={<Icon as={MaterialCommunityIcons} name='delete-outline' />}
+        icon={<Icon as={AntDesign} name='delete' />}
         size='md'
         onPress={() => {
           setIsOpen(true)
