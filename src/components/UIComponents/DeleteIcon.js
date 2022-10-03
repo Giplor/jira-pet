@@ -2,7 +2,7 @@ import { Icon, IconButton, AlertDialog, Button } from 'native-base'
 import { useState } from 'react'
 import { AntDesign } from '@expo/vector-icons'
 
-const DeleteIcon = ({ onPress }) => {
+const DeleteIcon = ({ onPress, deleteItem }) => {
   const [isOpen, setIsOpen] = useState(false)
 
   const onClose = () => setIsOpen(false)
@@ -19,7 +19,10 @@ const DeleteIcon = ({ onPress }) => {
       <AlertDialog isOpen={isOpen} onClose={onClose}>
         <AlertDialog.Content>
           <AlertDialog.CloseButton />
-          <AlertDialog.Body>Delete this item?</AlertDialog.Body>
+          <AlertDialog.Header
+            _text={{ fontWeight: 'bold' }}
+          >{`Delete ${deleteItem}`}</AlertDialog.Header>
+          <AlertDialog.Body>{`Delete this ${deleteItem}?`}</AlertDialog.Body>
           <AlertDialog.Footer>
             <Button.Group space={2}>
               <Button variant='unstyled' colorScheme='coolGray' onPress={onClose}>

@@ -6,7 +6,6 @@ import {
   VStack,
   FlatList,
   Pressable,
-  Button,
   Spinner,
   Center,
 } from 'native-base'
@@ -15,6 +14,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import {
   selectAllProjectTasks,
   selectCurrentProject,
+  selectProjectUsers,
 } from '../redux/selectors/selectors'
 import { deleteProject } from '../redux/slices/projectsSlice'
 import { setTaskId } from '../redux/slices/tasksSlice'
@@ -25,10 +25,43 @@ import { useEffect } from 'react'
 import { fetchTasks } from '../redux/slices/tasksSlice'
 import UserAvatar from '../components/UsersComponents/UserAvatar'
 import { useState } from 'react'
-import ModalRename from '../components/UIComponents/ModalRename'
 import CreateTaskIcon from '../components/UIComponents/CreateTaskIcon'
+import { memo } from 'react'
 
-const RenderTaskItem = ({ task }) => {
+const RenderUserItem = memo(({ user }) => {
+  const navigation = useNavigation()
+
+  const goToProjectUser = () => {
+    navigation.navigate('ProjectUser')
+  }
+
+  return (
+    <Box px='2'>
+      <Pressable onPress={() => console.log(user.id)}>
+        <UserAvatar username={user.username} size='lg' />
+      </Pressable>
+    </Box>
+  )
+})
+
+const UsersList = () => {
+  const users = useSelector(selectProjectUsers)
+
+  return (
+    <Box>
+      <Text>Developers - {users.length}</Text>
+      <FlatList
+        data={users}
+        renderItem={({ item }) => <RenderUserItem user={item} />}
+        horizontal
+        backgroundColor='red.400'
+        showsHorizontalScrollIndicator={false}
+      />
+    </Box>
+  )
+}
+
+const RenderTaskItem = memo(({ task }) => {
   const navigation = useNavigation()
   const dispatch = useDispatch()
 
@@ -50,20 +83,20 @@ const RenderTaskItem = ({ task }) => {
       </Box>
     </Pressable>
   )
-}
+})
 
 const ProjectTasks = () => {
   const tasks = useSelector(selectAllProjectTasks)
 
   return (
-    <>
-      <Text>Tasks: {tasks.length}</Text>
+    <Box>
+      <Text>Tasks - {tasks.length}</Text>
       <FlatList
         data={tasks}
         renderItem={({ item }) => <RenderTaskItem task={item} />}
         keyExtractor={(item) => item.id}
       />
-    </>
+    </Box>
   )
 }
 
@@ -88,10 +121,6 @@ const ProjectInfoScreen = () => {
 
   const goToAddUser = () => {
     navigation.navigate('AddUser')
-  }
-
-  const goToEditProject = () => {
-    navigation.navigate('EditProject')
   }
 
   const goToCreateNewTask = () => {
@@ -119,15 +148,15 @@ const ProjectInfoScreen = () => {
       <HStack alignSelf='flex-end' alignItems='center'>
         <CreateTaskIcon onPress={goToCreateNewTask} />
         <AddUserIcon onPress={goToAddUser} />
-        <DeleteIcon onPress={deleteThisProject} />
-        <EditIcon onPress={goToEditProject} />
+        <DeleteIcon onPress={deleteThisProject} deleteItem='project' />
+        <EditIcon />
       </HStack>
       <Heading>{project.title}</Heading>
-      <ModalRename title={project.title} description={project.description} />
+
       <Box width='100%' height='10%' maxHeight='70'>
         <Text>{project.description}</Text>
       </Box>
-      <Button onPress={goToProjectUsers}>Users</Button>
+      <UsersList />
       <ProjectTasks />
     </Box>
   )
