@@ -27,6 +27,7 @@ import UserAvatar from '../components/UsersComponents/UserAvatar'
 import { useState } from 'react'
 import CreateTaskIcon from '../components/UIComponents/CreateTaskIcon'
 import { memo } from 'react'
+import InfoHeader from '../components/UIComponents/InfoHeader'
 
 const RenderUserItem = memo(({ user }) => {
   const navigation = useNavigation()
@@ -151,11 +152,7 @@ const ProjectInfoScreen = () => {
         <DeleteIcon onPress={deleteThisProject} deleteItem='project' />
         <EditIcon />
       </HStack>
-      <Heading>{project.title}</Heading>
-
-      <Box width='100%' height='10%' maxHeight='70'>
-        <Text>{project.description}</Text>
-      </Box>
+      <InfoHeader title={project.title} description={project.description} />
       <UsersList />
       <ProjectTasks />
     </Box>
