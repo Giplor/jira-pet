@@ -1,6 +1,5 @@
 import {
   Box,
-  Heading,
   HStack,
   Text,
   VStack,
@@ -16,7 +15,7 @@ import {
   selectCurrentProject,
   selectProjectUsers,
 } from '../redux/selectors/selectors'
-import { deleteProject } from '../redux/slices/projectsSlice'
+import { deleteProject, setProjectId } from '../redux/slices/projectsSlice'
 import { setTaskId } from '../redux/slices/tasksSlice'
 import AddUserIcon from '../components/UIComponents/AddUserIcon'
 import DeleteIcon from '../components/UIComponents/DeleteIcon'
@@ -24,43 +23,42 @@ import EditIcon from '../components/UIComponents/EditIcon'
 import { useEffect } from 'react'
 import { fetchTasks } from '../redux/slices/tasksSlice'
 import UserAvatar from '../components/UsersComponents/UserAvatar'
-import { useState } from 'react'
 import CreateTaskIcon from '../components/UIComponents/CreateTaskIcon'
 import { memo } from 'react'
 import InfoHeader from '../components/UIComponents/InfoHeader'
 
-const RenderUserItem = memo(({ user }) => {
-  const navigation = useNavigation()
+// const RenderUserItem = memo(({ user }) => {
+//   const navigation = useNavigation()
 
-  const goToProjectUser = () => {
-    navigation.navigate('ProjectUser')
-  }
+//   const goToProjectUser = () => {
+//     navigation.navigate('ProjectUser')
+//   }
 
-  return (
-    <Box px='2'>
-      <Pressable onPress={() => console.log(user.id)}>
-        <UserAvatar username={user.username} size='lg' />
-      </Pressable>
-    </Box>
-  )
-})
+//   return (
+//     <Box px='2'>
+//       <Pressable onPress={() => console.log(user.id)}>
+//         <UserAvatar username={user.username} size='lg' />
+//       </Pressable>
+//     </Box>
+//   )
+// })
 
-const UsersList = () => {
-  const users = useSelector(selectProjectUsers)
+// const UsersList = () => {
+//   const users = useSelector(selectProjectUsers)
 
-  return (
-    <Box>
-      <Text>Developers - {users.length}</Text>
-      <FlatList
-        data={users}
-        renderItem={({ item }) => <RenderUserItem user={item} />}
-        horizontal
-        backgroundColor='red.400'
-        showsHorizontalScrollIndicator={false}
-      />
-    </Box>
-  )
-}
+//   return (
+//     <Box>
+//       <Text>Developers - {users.length}</Text>
+//       <FlatList
+//         data={users}
+//         renderItem={({ item }) => <RenderUserItem user={item} />}
+//         horizontal
+//         backgroundColor='red.400'
+//         showsHorizontalScrollIndicator={false}
+//       />
+//     </Box>
+//   )
+// }
 
 const RenderTaskItem = memo(({ task }) => {
   const navigation = useNavigation()
@@ -88,7 +86,6 @@ const RenderTaskItem = memo(({ task }) => {
 
 const ProjectTasks = () => {
   const tasks = useSelector(selectAllProjectTasks)
-
   return (
     <Box>
       <Text>Tasks - {tasks.length}</Text>
@@ -101,19 +98,15 @@ const ProjectTasks = () => {
   )
 }
 
-const ProjectInfoScreen = () => {
+const ProjectInfoScreen = ({ route }) => {
   const dispatch = useDispatch()
+
   const navigation = useNavigation()
   const project = useSelector(selectCurrentProject)
 
-  const [loading, setLoading] = useState(true)
-
-  const stopLoading = () => {
-    setLoading(false)
-  }
-
   useEffect(() => {
-    dispatch(fetchTasks({ callback: stopLoading }))
+    dispatch(setProjectId(route.params.projectId))
+    dispatch(fetchTasks())
   }, [])
 
   const goToProjectUsers = () => {
@@ -136,6 +129,9 @@ const ProjectInfoScreen = () => {
       })
     )
   }
+
+  const loading = useSelector((state) => state.tasks.isLoading)
+
   if (loading) {
     return (
       <Center flex={1} safeArea>
@@ -152,8 +148,8 @@ const ProjectInfoScreen = () => {
         <DeleteIcon onPress={deleteThisProject} deleteItem='project' />
         <EditIcon />
       </HStack>
-      <InfoHeader title={project.title} description={project.description} />
-      <UsersList />
+      <InfoHeader title={project?.title} description={project?.description} />
+      {/* <UsersList /> */}
       <ProjectTasks />
     </Box>
   )

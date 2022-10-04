@@ -1,5 +1,4 @@
-import { useNavigation } from '@react-navigation/native'
-import { Box, Button, Text, VStack, HStack, FlatList, Pressable } from 'native-base'
+import { Box, Button, Text, VStack, FlatList, Pressable } from 'native-base'
 import { useState, memo, useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import { selectProjectUsers } from '../redux/selectors/selectors'
@@ -42,8 +41,6 @@ const UsersList = memo(({ setUser }) => {
 })
 
 const CreateNewTaskScreen = () => {
-  const navigation = useNavigation()
-
   const dispatch = useDispatch()
 
   const [selectedUser, setSelectedUser] = useState({ username: '', id: '' })
