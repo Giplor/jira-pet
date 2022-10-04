@@ -1,13 +1,4 @@
-import {
-  Box,
-  HStack,
-  Text,
-  VStack,
-  FlatList,
-  Pressable,
-  Spinner,
-  Center,
-} from 'native-base'
+import { Box, HStack, Text, VStack, FlatList, Pressable } from 'native-base'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -26,39 +17,41 @@ import UserAvatar from '../components/UsersComponents/UserAvatar'
 import CreateTaskIcon from '../components/UIComponents/CreateTaskIcon'
 import { memo } from 'react'
 import InfoHeader from '../components/UIComponents/InfoHeader'
+import Loader from '../components/UIComponents/Loader'
+import TaskItem from '../components/TasksComponents/TaskItem'
 
-// const RenderUserItem = memo(({ user }) => {
-//   const navigation = useNavigation()
+const RenderUserItem = memo(({ user }) => {
+  const navigation = useNavigation()
 
-//   const goToProjectUser = () => {
-//     navigation.navigate('ProjectUser')
-//   }
+  const goToProjectUser = () => {
+    navigation.navigate('ProjectUser')
+  }
 
-//   return (
-//     <Box px='2'>
-//       <Pressable onPress={() => console.log(user.id)}>
-//         <UserAvatar username={user.username} size='lg' />
-//       </Pressable>
-//     </Box>
-//   )
-// })
+  return (
+    <Box px='2'>
+      <Pressable onPress={() => console.log(user.id)}>
+        <UserAvatar username={user.username} size='lg' />
+      </Pressable>
+    </Box>
+  )
+})
 
-// const UsersList = () => {
-//   const users = useSelector(selectProjectUsers)
+const UsersList = () => {
+  const users = useSelector(selectProjectUsers)
 
-//   return (
-//     <Box>
-//       <Text>Developers - {users.length}</Text>
-//       <FlatList
-//         data={users}
-//         renderItem={({ item }) => <RenderUserItem user={item} />}
-//         horizontal
-//         backgroundColor='red.400'
-//         showsHorizontalScrollIndicator={false}
-//       />
-//     </Box>
-//   )
-// }
+  return (
+    <Box>
+      <Text>Users - {users?.length}</Text>
+      <FlatList
+        data={users}
+        renderItem={({ item }) => <RenderUserItem user={item} />}
+        horizontal
+        backgroundColor='red.400'
+        showsHorizontalScrollIndicator={false}
+      />
+    </Box>
+  )
+}
 
 const RenderTaskItem = memo(({ task }) => {
   const navigation = useNavigation()
@@ -70,17 +63,12 @@ const RenderTaskItem = memo(({ task }) => {
   }
 
   return (
-    <Pressable py='2' width='100%' onPress={goToTaskInfo}>
-      <Box width='80%' rounded='lg' p='2' borderBottomWidth={1}>
-        <HStack justifyContent='space-between' alignItems='flex-end'>
-          <VStack flex={1}>
-            <Text>{task.title}</Text>
-            <Text>{task.description}</Text>
-          </VStack>
-          <UserAvatar size='sm' username={task?.user?.username} />
-        </HStack>
-      </Box>
-    </Pressable>
+    <TaskItem
+      onPress={goToTaskInfo}
+      title={task.title}
+      description={task.description}
+      username={task?.user?.username}
+    />
   )
 })
 
@@ -109,9 +97,9 @@ const ProjectInfoScreen = ({ route }) => {
     dispatch(fetchTasks())
   }, [])
 
-  const goToProjectUsers = () => {
-    navigation.navigate('ProjectUsers')
-  }
+  // const goToProjectUsers = () => {
+  //   navigation.navigate('ProjectUsers')
+  // }
 
   const goToAddUser = () => {
     navigation.navigate('AddUser')
@@ -133,11 +121,7 @@ const ProjectInfoScreen = ({ route }) => {
   const loading = useSelector((state) => state.tasks.isLoading)
 
   if (loading) {
-    return (
-      <Center flex={1} safeArea>
-        <Spinner size='lg' />
-      </Center>
-    )
+    return <Loader />
   }
 
   return (
@@ -149,7 +133,7 @@ const ProjectInfoScreen = ({ route }) => {
         <EditIcon />
       </HStack>
       <InfoHeader title={project?.title} description={project?.description} />
-      {/* <UsersList /> */}
+      <UsersList />
       <ProjectTasks />
     </Box>
   )

@@ -1,11 +1,10 @@
 import { Box, Button, Text, VStack, FlatList, Pressable } from 'native-base'
 import { useState, memo, useCallback } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { selectProjectUsers } from '../redux/selectors/selectors'
 import { useValidation } from '../hooks/useValidation'
 import DefaultInput from '../components/UIComponents/DefaultInput'
 import { createNewTask } from '../redux/slices/tasksSlice'
-import { useDispatch } from 'react-redux'
 import UserItem from '../components/UsersComponents/UserItem'
 
 const UsersList = memo(({ setUser }) => {
@@ -81,7 +80,6 @@ const CreateNewTaskScreen = () => {
           onBlur={description.onBlur}
           errorMessage={description.errorMessage}
           label='Description'
-          multiline={true}
         />
         <Button
           onPress={createTask}
