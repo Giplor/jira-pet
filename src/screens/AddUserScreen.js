@@ -8,6 +8,7 @@ import {
 import { fetchUsers } from '../redux/slices/usersSlice'
 import { addUserToProject } from '../redux/slices/projectsSlice'
 import { memo } from 'react'
+import UserItem from '../components/UsersComponents/UserItem'
 
 const RenderUserItem = memo(({ user, projectId }) => {
   const dispatch = useDispatch()
@@ -19,8 +20,8 @@ const RenderUserItem = memo(({ user, projectId }) => {
   }
 
   return (
-    <Box width='80%' borderBottomWidth={1} py='4'>
-      <HStack justifyContent='space-between'>
+    <Box width='80%' borderBottomWidth={1} py='2'>
+      <HStack justifyContent='space-between' alignItems='center'>
         <Text>{user.username}</Text>
         <Button onPress={addUser} isLoading={isLoading}>
           Add

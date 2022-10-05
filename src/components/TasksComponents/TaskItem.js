@@ -7,7 +7,7 @@ const TaskItem = ({ onPress, title, description, username }) => {
       <Box width='80%' rounded='lg' p='2' borderBottomWidth={1}>
         <HStack justifyContent='space-between' alignItems='flex-end'>
           <VStack flex={1}>
-            <Text>{title}</Text>
+            <Text bold>{title}</Text>
             <Text>{description}</Text>
           </VStack>
           <UserAvatar size='sm' username={username} />

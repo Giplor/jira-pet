@@ -7,10 +7,8 @@ import {
   selectProjectUsers,
 } from '../redux/selectors/selectors'
 import { deleteProject, setProjectId } from '../redux/slices/projectsSlice'
-import { setTaskId } from '../redux/slices/tasksSlice'
 import AddUserIcon from '../components/UIComponents/AddUserIcon'
 import DeleteIcon from '../components/UIComponents/DeleteIcon'
-import EditIcon from '../components/UIComponents/EditIcon'
 import { useEffect, memo } from 'react'
 import { fetchTasks } from '../redux/slices/tasksSlice'
 import UserAvatar from '../components/UsersComponents/UserAvatar'
@@ -122,7 +120,6 @@ const ProjectInfoScreen = ({ route }) => {
         <CreateTaskIcon onPress={goToCreateNewTask} />
         <AddUserIcon onPress={goToAddUser} />
         <DeleteIcon onPress={deleteThisProject} deleteItem='project' />
-        <EditIcon />
       </HStack>
       <InfoHeader title={project?.title} description={project?.description} />
       <UsersList />
