@@ -1,4 +1,4 @@
-import { Box, HStack, Text, VStack, FlatList, Pressable } from 'native-base'
+import { Box, HStack, Text, FlatList, Pressable } from 'native-base'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -11,11 +11,10 @@ import { setTaskId } from '../redux/slices/tasksSlice'
 import AddUserIcon from '../components/UIComponents/AddUserIcon'
 import DeleteIcon from '../components/UIComponents/DeleteIcon'
 import EditIcon from '../components/UIComponents/EditIcon'
-import { useEffect } from 'react'
+import { useEffect, memo } from 'react'
 import { fetchTasks } from '../redux/slices/tasksSlice'
 import UserAvatar from '../components/UsersComponents/UserAvatar'
 import CreateTaskIcon from '../components/UIComponents/CreateTaskIcon'
-import { memo } from 'react'
 import InfoHeader from '../components/UIComponents/InfoHeader'
 import Loader from '../components/UIComponents/Loader'
 import TaskItem from '../components/TasksComponents/TaskItem'
@@ -41,12 +40,11 @@ const UsersList = () => {
 
   return (
     <Box>
-      <Text>Users - {users?.length}</Text>
+      <Text>Developers - {users?.length}</Text>
       <FlatList
         data={users}
         renderItem={({ item }) => <RenderUserItem user={item} />}
         horizontal
-        backgroundColor='red.400'
         showsHorizontalScrollIndicator={false}
       />
     </Box>
@@ -55,11 +53,9 @@ const UsersList = () => {
 
 const RenderTaskItem = memo(({ task }) => {
   const navigation = useNavigation()
-  const dispatch = useDispatch()
 
   const goToTaskInfo = () => {
-    dispatch(setTaskId(task.id))
-    navigation.navigate('TaskInfo')
+    navigation.navigate('TaskInfo', { taskId: task.id })
   }
 
   return (
@@ -96,10 +92,6 @@ const ProjectInfoScreen = ({ route }) => {
     dispatch(setProjectId(route.params.projectId))
     dispatch(fetchTasks())
   }, [])
-
-  // const goToProjectUsers = () => {
-  //   navigation.navigate('ProjectUsers')
-  // }
 
   const goToAddUser = () => {
     navigation.navigate('AddUser')

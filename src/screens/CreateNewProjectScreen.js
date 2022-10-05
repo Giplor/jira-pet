@@ -28,7 +28,7 @@ const CreateNewProjectScreen = () => {
 
   return (
     <Center width='100%' safeArea>
-      <Box width='80%' maxWidth='260'>
+      <Box width='100%'>
         <VStack justifyContent='space-between' space='3'>
           <DefaultInput
             value={title.value}

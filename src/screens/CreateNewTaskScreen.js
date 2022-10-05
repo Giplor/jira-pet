@@ -6,26 +6,23 @@ import { useValidation } from '../hooks/useValidation'
 import DefaultInput from '../components/UIComponents/DefaultInput'
 import { createNewTask } from '../redux/slices/tasksSlice'
 import UserItem from '../components/UsersComponents/UserItem'
+import { useNavigation } from '@react-navigation/native'
 
 const UsersList = memo(({ setUser }) => {
   const users = useSelector(selectProjectUsers)
   console.log('render UsersList')
 
   const RenderUserItem = memo(({ user }) => {
-    const createTask = () => {
-      console.log(`username: ${user.username} id: ${user.id}`)
-    }
-
     return (
       <Pressable
+        borderBottomWidth={1}
+        p='2'
         width='100%'
         onPress={() => {
-          setUser(user.username, user.id), createTask()
+          setUser(user.username, user.id)
         }}
       >
-        <Box width='80%' rounded='lg' p='2' borderBottomWidth={1}>
-          <UserItem size='sm' username={user.username} />
-        </Box>
+        <UserItem size='sm' username={user.username} />
       </Pressable>
     )
   })
@@ -46,6 +43,12 @@ const CreateNewTaskScreen = () => {
 
   const title = useValidation()
   const description = useValidation()
+
+  const navigation = useNavigation()
+
+  const goToProjectInfo = useCallback(() => {
+    navigation.navigate('Main', 'ProjectInfo')
+  }, [])
 
   const loading = useSelector((state) => state.tasks.isLoading)
 

@@ -1,4 +1,4 @@
-import { Box, Center, Fab, FlatList, Icon, Spinner } from 'native-base'
+import { Box, Center, Fab, FlatList, Icon } from 'native-base'
 import { useDispatch, useSelector } from 'react-redux'
 import { AntDesign } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
@@ -6,6 +6,7 @@ import { useEffect, memo } from 'react'
 import { fetchProjects } from '../redux/slices/projectsSlice'
 import { selectAllProjects } from '../redux/selectors/selectors'
 import ProjectItem from '../components/ProjectsComponents/ProjectItem'
+import Loader from '../components/UIComponents/Loader'
 
 const RenderProjectItem = memo(({ project }) => {
   const navigation = useNavigation()
@@ -47,11 +48,7 @@ const ProjectsScreen = () => {
   }, [])
 
   if (loading) {
-    return (
-      <Center flex={1}>
-        <Spinner size='lg' />
-      </Center>
-    )
+    return <Loader />
   }
 
   return (

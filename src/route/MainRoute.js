@@ -8,7 +8,6 @@ import CurrentUserScreen from '../screens/CurrentUserScreen'
 import CreateNewTaskScreen from '../screens/CreateNewTaskScreen'
 import AddUserScreen from '../screens/AddUserScreen'
 import TaskInfoScreen from '../screens/TaskInfoScreen'
-import ProjectUsersScreen from '../screens/ProjectUsersScreen'
 
 const ProjectsStack = createNativeStackNavigator()
 
@@ -17,7 +16,6 @@ const ProjectsStackScreen = () => {
     <ProjectsStack.Navigator screenOptions={{ headerShown: false }}>
       <ProjectsStack.Screen name='Projects' component={ProjectsScreen} />
       <ProjectsStack.Screen name='ProjectInfo' component={ProjectInfoScreen} />
-      <ProjectsStack.Screen name='ProjectUsers' component={ProjectUsersScreen} />
       <ProjectsStack.Screen name='AddUser' component={AddUserScreen} />
       <ProjectsStack.Screen name='TaskInfo' component={TaskInfoScreen} />
     </ProjectsStack.Navigator>

@@ -70,6 +70,21 @@ export const addUserToProject = createAsyncThunk(
   }
 )
 
+export const deleteUserFromProject = createAsyncThunk(
+  'projects/addUserToProject',
+  async ({ userId, projectId }, { dispatch }) => {
+    try {
+      await axiosInstance.delete(`/projects/${projectId}/users`, {
+        user_id: userId,
+      })
+      dispatch(fetchProjects())
+    } catch (error) {
+      console.log('error projects/addUserToProject')
+      console.log(error.response.data)
+    }
+  }
+)
+
 export const deleteProject = createAsyncThunk(
   'projects/deleteProject',
   async ({ id, callback }, { dispatch }) => {
@@ -79,6 +94,7 @@ export const deleteProject = createAsyncThunk(
       callback?.()
       dispatch(fetchProjects())
     } catch (error) {
+      dispatch(setLoading(true))
       console.log('error projects/deleteProject')
       console.log(error.response)
     }
