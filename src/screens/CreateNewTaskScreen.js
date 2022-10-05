@@ -14,16 +14,13 @@ const UsersList = memo(({ setUser }) => {
 
   const RenderUserItem = memo(({ user }) => {
     return (
-      <Pressable
-        borderBottomWidth={1}
-        p='2'
-        width='100%'
+      <UserItem
+        size='sm'
+        username={user.username}
         onPress={() => {
           setUser(user.username, user.id)
         }}
-      >
-        <UserItem size='sm' username={user.username} />
-      </Pressable>
+      />
     )
   })
 

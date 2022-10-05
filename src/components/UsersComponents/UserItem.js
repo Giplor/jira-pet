@@ -1,12 +1,14 @@
-import { HStack, Text } from 'native-base'
+import { HStack, Text, Pressable } from 'native-base'
 import UserAvatar from './UserAvatar'
 
-const UserItem = ({ username, size }) => {
+const UserItem = ({ username, size, onPress }) => {
   return (
-    <HStack alignItems='center' py={2}>
-      <UserAvatar username={username} size={size} />
-      <Text pl={2}>{username}</Text>
-    </HStack>
+    <Pressable width='100%' p='2' onPress={onPress}>
+      <HStack alignItems='center' py={2}>
+        <UserAvatar username={username} size={size} />
+        <Text pl={2}>{username}</Text>
+      </HStack>
+    </Pressable>
   )
 }
 

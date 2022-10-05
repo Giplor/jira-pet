@@ -1,10 +1,11 @@
 import { Text, Box } from 'native-base'
-import { useState } from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/UIComponents/Loader'
 import { selectCurrentTask } from '../redux/selectors/selectors'
 import { fetchTaskById, setTaskId } from '../redux/slices/tasksSlice'
+import UserItem from '../components/UsersComponents/UserItem'
+import InfoHeader from '../components/UIComponents/InfoHeader'
 
 const TaskInfoScreen = ({ route }) => {
   const task = useSelector(selectCurrentTask)
@@ -20,9 +21,10 @@ const TaskInfoScreen = ({ route }) => {
   }
 
   return (
-    <Box safeArea>
-      <Text>{task?.title}</Text>
-      <Text>{task?.description}</Text>
+    <Box flex={1} safeArea>
+      <InfoHeader title={task.title} description={task.description} />
+      <Text>Developer:</Text>
+      <UserItem username={task?.user?.username} />
     </Box>
   )
 }
