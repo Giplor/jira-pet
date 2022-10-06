@@ -29,15 +29,19 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config
+    console.log('pre if error status 401')
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
       const token = store.getState().tokens.accessToken
       const refreshToken = store.getState().tokens.refreshToken
+      console.log('error status 401')
       if (token) {
         let decoded = jwtDecode(token)
         const currentDate = dayjs()
         const expirationDate = dayjs.unix(decoded.exp)
+        console.log('if token error')
         if (currentDate.diff(expirationDate) > 0) {
+          console.log('update')
           const answer = await axiosInstance.post('/refresh', {
             refresh: refreshToken,
           })

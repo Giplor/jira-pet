@@ -1,4 +1,4 @@
-import { Box, HStack, Text, FlatList, Pressable } from 'native-base'
+import { Box, HStack, Text, FlatList } from 'native-base'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -16,19 +16,12 @@ import CreateTaskIcon from '../components/UIComponents/CreateTaskIcon'
 import InfoHeader from '../components/UIComponents/InfoHeader'
 import Loader from '../components/UIComponents/Loader'
 import TaskItem from '../components/TasksComponents/TaskItem'
+import { useFeedback } from '../hooks/useFeedback'
 
 const RenderUserItem = memo(({ user }) => {
-  const navigation = useNavigation()
-
-  const goToProjectUser = () => {
-    navigation.navigate('ProjectUser')
-  }
-
   return (
     <Box px='2'>
-      <Pressable onPress={() => console.log(user.id)}>
-        <UserAvatar username={user.username} size='lg' />
-      </Pressable>
+      <UserAvatar username={user.username} size='lg' />
     </Box>
   )
 })
@@ -86,6 +79,8 @@ const ProjectInfoScreen = ({ route }) => {
   const navigation = useNavigation()
   const project = useSelector(selectCurrentProject)
 
+  const { showFeedback } = useFeedback()
+
   useEffect(() => {
     dispatch(setProjectId(route.params.projectId))
     dispatch(fetchTasks())
@@ -99,11 +94,20 @@ const ProjectInfoScreen = ({ route }) => {
     navigation.navigate('CreateNewTask')
   }
 
+  const errorDelete = (message) => {
+    navigation.navigate('Projects')
+    showFeedback(message)
+  }
+
+  const successDelete = () => {
+    navigation.navigate('Projects')
+  }
+
   const deleteThisProject = () => {
     dispatch(
       deleteProject({
-        id: project.id,
-        callback: () => navigation.navigate('Projects'),
+        successDelete,
+        errorDelete,
       })
     )
   }

@@ -7,13 +7,21 @@ import { fetchTaskById, setTaskId } from '../redux/slices/tasksSlice'
 import UserItem from '../components/UsersComponents/UserItem'
 import InfoHeader from '../components/UIComponents/InfoHeader'
 import DeleteIcon from '../components/UIComponents/DeleteIcon'
+import { useFeedback } from '../hooks/useFeedback'
 
-const TaskInfoScreen = ({ route }) => {
+const TaskInfoScreen = ({ route, navigation }) => {
   const task = useSelector(selectCurrentTask)
   const dispatch = useDispatch()
+  const { showFeedback } = useFeedback()
+
+  const errorFetchTask = (message) => {
+    navigation.navigate('ProjectInfo')
+    showFeedback(message)
+  }
+
   useEffect(() => {
     dispatch(setTaskId(route.params.taskId))
-    dispatch(fetchTaskById())
+    dispatch(fetchTaskById({ errorFetchTask }))
   }, [])
 
   const loading = useSelector((state) => state.tasks.isLoading)

@@ -20,7 +20,7 @@ export const fetchTasks = createAsyncThunk(
 
 export const fetchTaskById = createAsyncThunk(
   'tasks/fetchTaskById',
-  async (_, { dispatch, getState }) => {
+  async ({ errorFetchTask }, { dispatch, getState }) => {
     try {
       dispatch(setLoading(true))
       const projectId = getState().projects.projectId
@@ -29,7 +29,8 @@ export const fetchTaskById = createAsyncThunk(
       dispatch(setTask(answer.data.task))
     } catch (error) {
       console.log('error taksks/fetchTaskById')
-      console.log(error.response)
+      errorFetchTask?.(error.response.data.error)
+      dispatch(fetchTasks())
     } finally {
       dispatch(setLoading(false))
     }
@@ -38,7 +39,10 @@ export const fetchTaskById = createAsyncThunk(
 
 export const createNewTask = createAsyncThunk(
   'tasks/createTask',
-  async ({ title, description, userId, errorCallback }, { dispatch, getState }) => {
+  async (
+    { title, description, userId, successCallback, errorCallback },
+    { dispatch, getState }
+  ) => {
     try {
       dispatch(setLoading(true))
       const projectId = getState().projects.projectId
@@ -49,12 +53,12 @@ export const createNewTask = createAsyncThunk(
         type_id: 1,
         user_id: userId,
       })
-      dispatch(fetchTasks())
+      successCallback?.()
     } catch (error) {
       errorCallback?.(error.response.data.title)
       console.log('error tasks/createTask')
     } finally {
-      dispatch(setLoading(false))
+      dispatch(fetchTasks())
     }
   }
 )

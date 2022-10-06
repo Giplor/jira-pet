@@ -4,12 +4,14 @@ import DefaultInput from '../components/UIComponents/DefaultInput'
 import { useDispatch, useSelector } from 'react-redux'
 import { useValidation } from '../hooks/useValidation'
 import { createNewProject } from '../redux/slices/projectsSlice'
+import { useFeedback } from '../hooks/useFeedback'
 
 const CreateNewProjectScreen = () => {
   const navigation = useNavigation()
   const dispatch = useDispatch()
   const title = useValidation()
   const description = useValidation()
+  const { showFeedback } = useFeedback()
   const loading = useSelector((state) => state.projects.isLoading)
 
   const goToProjectsScreen = () => {
@@ -21,7 +23,8 @@ const CreateNewProjectScreen = () => {
       createNewProject({
         title: title.value,
         description: description.value,
-        callback: goToProjectsScreen,
+        successCallback: goToProjectsScreen,
+        errorCallback: showFeedback,
       })
     )
   }

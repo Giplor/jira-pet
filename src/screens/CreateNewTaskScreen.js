@@ -11,7 +11,7 @@ import { useFeedback } from '../hooks/useFeedback'
 
 const UsersList = memo(({ setUser }) => {
   const users = useSelector(selectProjectUsers)
-
+  console.log('render userslist')
   const RenderUserItem = memo(({ user }) => {
     return (
       <UserItem
@@ -61,8 +61,8 @@ const CreateNewTaskScreen = () => {
         title: title.value,
         description: description.value,
         userId: selectedUser.id,
-        errorCallback: showFeedback,
         successCallback: goToProjectInfo,
+        errorCallback: showFeedback,
       })
     )
   }

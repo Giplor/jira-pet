@@ -19,7 +19,7 @@ export const fetchProjects = createAsyncThunk(
 
 export const createNewProject = createAsyncThunk(
   'projects/createProject',
-  async ({ title, description, callback }, { dispatch }) => {
+  async ({ title, description, successCallback, errorCallback }, { dispatch }) => {
     try {
       dispatch(setLoading(true))
       await axiosInstance.post('/projects', {
@@ -27,76 +27,43 @@ export const createNewProject = createAsyncThunk(
         description,
       })
       dispatch(fetchProjects())
-      callback?.()
+      successCallback?.()
     } catch (error) {
       dispatch(setLoading(false))
-      console.log('error projects/createProject')
-      console.log(error.response.data)
-    }
-  }
-)
-
-export const editProject = createAsyncThunk(
-  'projects/editProject',
-  async ({ projectId, title, description, callback }, { dispatch }) => {
-    try {
-      dispatch(setLoading(true))
-      await axiosInstance.put(`/projects/${projectId}`, {
-        title,
-        description,
-      })
-      dispatch(fetchProjects())
-      callback?.()
-    } catch (error) {
-      dispatch(setLoading(false))
-      console.log('error projects/editProject')
-      console.log(error.response.data)
+      errorCallback?.(error.response.data.title || error.response.data.description)
     }
   }
 )
 
 export const addUserToProject = createAsyncThunk(
   'projects/addUserToProject',
-  async ({ userId, projectId }, { dispatch }) => {
+  async ({ userId, errorCallback }, { dispatch, getState }) => {
     try {
+      const projectId = getState().projects.projectId
       await axiosInstance.post(`/projects/${projectId}/users`, {
         user_id: userId,
       })
       dispatch(fetchProjects())
     } catch (error) {
-      console.log('error projects/addUserToProject')
-      console.log(error.response.data)
-    }
-  }
-)
-
-export const deleteUserFromProject = createAsyncThunk(
-  'projects/addUserToProject',
-  async ({ userId, projectId }, { dispatch }) => {
-    try {
-      await axiosInstance.delete(`/projects/${projectId}/users`, {
-        user_id: userId,
-      })
-      dispatch(fetchProjects())
-    } catch (error) {
-      console.log('error projects/addUserToProject')
-      console.log(error.response.data)
+      errorCallback?.(error.response.data.error)
     }
   }
 )
 
 export const deleteProject = createAsyncThunk(
   'projects/deleteProject',
-  async ({ id, callback }, { dispatch }) => {
+  async ({ successDelete, errorDelete }, { dispatch, getState }) => {
     try {
+      const projectId = getState().projects.projectId
       dispatch(setLoading(true))
-      await axiosInstance.delete(`/projects/${id}`)
-      callback?.()
-      dispatch(fetchProjects())
+      await axiosInstance.delete(`/projects/${projectId}`)
+      successDelete?.()
     } catch (error) {
-      dispatch(setLoading(true))
+      errorDelete?.(error.response.data.detail)
       console.log('error projects/deleteProject')
       console.log(error.response)
+    } finally {
+      dispatch(fetchProjects())
     }
   }
 )
