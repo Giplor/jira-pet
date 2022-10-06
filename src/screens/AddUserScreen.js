@@ -8,7 +8,6 @@ import {
 import { fetchUsers } from '../redux/slices/usersSlice'
 import { addUserToProject } from '../redux/slices/projectsSlice'
 import { memo } from 'react'
-import UserItem from '../components/UsersComponents/UserItem'
 
 const RenderUserItem = memo(({ user, projectId }) => {
   const dispatch = useDispatch()

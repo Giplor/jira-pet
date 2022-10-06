@@ -6,6 +6,7 @@ import { selectCurrentTask } from '../redux/selectors/selectors'
 import { fetchTaskById, setTaskId } from '../redux/slices/tasksSlice'
 import UserItem from '../components/UsersComponents/UserItem'
 import InfoHeader from '../components/UIComponents/InfoHeader'
+import DeleteIcon from '../components/UIComponents/DeleteIcon'
 
 const TaskInfoScreen = ({ route }) => {
   const task = useSelector(selectCurrentTask)
@@ -22,9 +23,14 @@ const TaskInfoScreen = ({ route }) => {
 
   return (
     <Box flex={1} safeArea>
+      <Box alignSelf='flex-end'>
+        <DeleteIcon onPress={() => console.log(`delete icon press: ${task.id}`)} />
+      </Box>
       <InfoHeader title={task.title} description={task.description} />
-      <Text>Developer:</Text>
-      <UserItem username={task?.user?.username} />
+      <Box>
+        <Text>Developer:</Text>
+        <UserItem username={task?.user?.username} />
+      </Box>
     </Box>
   )
 }

@@ -1,4 +1,4 @@
-import { Box, Button, Text, VStack, FlatList, Pressable } from 'native-base'
+import { Box, Button, Text, VStack, FlatList } from 'native-base'
 import { useState, memo, useCallback } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { selectProjectUsers } from '../redux/selectors/selectors'
@@ -7,10 +7,10 @@ import DefaultInput from '../components/UIComponents/DefaultInput'
 import { createNewTask } from '../redux/slices/tasksSlice'
 import UserItem from '../components/UsersComponents/UserItem'
 import { useNavigation } from '@react-navigation/native'
+import { useFeedback } from '../hooks/useFeedback'
 
 const UsersList = memo(({ setUser }) => {
   const users = useSelector(selectProjectUsers)
-  console.log('render UsersList')
 
   const RenderUserItem = memo(({ user }) => {
     return (
@@ -53,13 +53,16 @@ const CreateNewTaskScreen = () => {
     setSelectedUser({ ...selectedUser, username, id })
   }, [])
 
+  const { showFeedback } = useFeedback()
+
   const createTask = () => {
-    console.log(`create task with user id: ${selectedUser.id}`)
     dispatch(
       createNewTask({
         title: title.value,
         description: description.value,
         userId: selectedUser.id,
+        errorCallback: showFeedback,
+        successCallback: goToProjectInfo,
       })
     )
   }

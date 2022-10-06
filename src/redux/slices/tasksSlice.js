@@ -38,7 +38,7 @@ export const fetchTaskById = createAsyncThunk(
 
 export const createNewTask = createAsyncThunk(
   'tasks/createTask',
-  async ({ title, description, userId }, { dispatch, getState }) => {
+  async ({ title, description, userId, errorCallback }, { dispatch, getState }) => {
     try {
       dispatch(setLoading(true))
       const projectId = getState().projects.projectId
@@ -51,8 +51,8 @@ export const createNewTask = createAsyncThunk(
       })
       dispatch(fetchTasks())
     } catch (error) {
+      errorCallback?.(error.response.data.title)
       console.log('error tasks/createTask')
-      console.log(error.response.data)
     } finally {
       dispatch(setLoading(false))
     }
