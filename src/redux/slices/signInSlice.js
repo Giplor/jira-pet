@@ -4,7 +4,7 @@ import { setAccessToken, setRefreshToken } from './tokensSlice'
 
 export const signIn = createAsyncThunk(
   'signIn/handleSignIn',
-  async ({ email, password, callback }, { dispatch }) => {
+  async ({ email, password, errorSignIn }, { dispatch }) => {
     try {
       dispatch(setIsLoading(true))
       const answer = await axiosInstance.post('/login', {
@@ -17,7 +17,7 @@ export const signIn = createAsyncThunk(
       }
     } catch (error) {
       console.log('error signIn/handleSignIn')
-      callback?.(error.response.data.detail)
+      errorSignIn?.(error.response.data.detail)
     } finally {
       dispatch(setIsLoading(false))
     }
