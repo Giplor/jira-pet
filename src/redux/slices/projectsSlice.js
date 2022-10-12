@@ -54,8 +54,8 @@ export const deleteProject = createAsyncThunk(
   'projects/deleteProject',
   async ({ successDelete, errorDelete }, { dispatch, getState }) => {
     try {
-      const projectId = getState().projects.projectId
       dispatch(setLoading(true))
+      const projectId = getState().projects.projectId
       await axiosInstance.delete(`/projects/${projectId}`)
       successDelete?.()
     } catch (error) {

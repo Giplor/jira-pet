@@ -65,14 +65,18 @@ export const createNewTask = createAsyncThunk(
 
 export const deleteTask = createAsyncThunk(
   'tasks/deleteTask',
-  async (id, { dispatch, getState }) => {
+  async ({ successDelete, errorDelete }, { dispatch, getState }) => {
     try {
       const projectId = getState().projects.projectId
-      await axiosInstance.delete(`projects/${projectId}/tasks/${id}`)
-      dispatch(fetchTasks())
+      const taskId = getState().tasks.taskId
+      await axiosInstance.delete(`projects/${projectId}/tasks/${taskId}`)
+      successDelete?.()
     } catch (error) {
+      errorDelete?.()
       console.log('error tasks/deleteTask')
-      console.log(error.response)
+      console.log(error.response.data)
+    } finally {
+      dispatch(fetchTasks())
     }
   }
 )

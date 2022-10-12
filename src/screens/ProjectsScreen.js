@@ -27,6 +27,7 @@ const RenderProjectItem = memo(({ project }) => {
 
 const ProjectsList = () => {
   const projects = useSelector(selectAllProjects)
+  const dispatch = useDispatch()
 
   return (
     <FlatList
@@ -34,6 +35,8 @@ const ProjectsList = () => {
       renderItem={({ item }) => <RenderProjectItem project={item} />}
       keyExtractor={(item) => item.id}
       showsVerticalScrollIndicator={false}
+      refreshing={false}
+      onRefresh={() => dispatch(fetchProjects())}
     />
   )
 }
