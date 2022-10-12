@@ -5,6 +5,7 @@ import DefaultInput from '../components/UIComponents/DefaultInput'
 import SecureInput from '../components/UIComponents/SecureInput'
 import { useValidation } from '../hooks/useValidation'
 import { signUp } from '../redux/slices/signUpSlice'
+import { useFeedback } from '../hooks/useFeedback'
 
 const SignUpScreen = () => {
   const dispatch = useDispatch()
@@ -13,6 +14,7 @@ const SignUpScreen = () => {
   const username = useValidation('', 'isEmpty')
   const email = useValidation('', 'isEmail')
   const password = useValidation('', 'isPassword')
+  const { showFeedback } = useFeedback()
 
   const handleSignIn = () => {
     dispatch(
@@ -20,13 +22,14 @@ const SignUpScreen = () => {
         username: username.value,
         email: email.value,
         password: password.value,
+        errorSignUp: showFeedback,
       })
     )
   }
 
   return (
-    <Box width='100%' maxWidth='260' safeArea>
-      <Center width='80%'>
+    <Center width='100%'>
+      <Box width='100%' maxWidth='260' safeArea>
         <VStack space='3'>
           <DefaultInput
             value={username.value}
@@ -60,8 +63,8 @@ const SignUpScreen = () => {
             Sign in
           </Button>
         </VStack>
-      </Center>
-    </Box>
+      </Box>
+    </Center>
   )
 }
 

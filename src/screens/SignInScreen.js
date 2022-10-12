@@ -1,10 +1,11 @@
 import { useNavigation } from '@react-navigation/native'
-import { Box, Button, Center, VStack, useToast } from 'native-base'
+import { Box, Button, Center, VStack } from 'native-base'
 import { useSelector, useDispatch } from 'react-redux'
 import DefaultInput from '../components/UIComponents/DefaultInput'
 import SecureInput from '../components/UIComponents/SecureInput'
 import { useValidation } from '../hooks/useValidation'
 import { signIn } from '../redux/slices/signInSlice'
+import { useFeedback } from '../hooks/useFeedback'
 
 const SignInScreen = () => {
   const dispatch = useDispatch()
@@ -12,17 +13,16 @@ const SignInScreen = () => {
   const navigation = useNavigation()
   const email = useValidation('', 'isEmail')
   const password = useValidation('', 'isPassword')
-  const toast = useToast()
 
-  const handleError = (errorMessage) => {
-    toast.show({
-      description: errorMessage,
-    })
-  }
+  const { showFeedback } = useFeedback()
 
   const handleSignIn = () => {
     dispatch(
-      signIn({ email: email.value, password: password.value, callback: handleError })
+      signIn({
+        email: email.value,
+        password: password.value,
+        errorSignIn: showFeedback,
+      })
     )
   }
 
