@@ -1,4 +1,4 @@
-import { Box, HStack, Text, FlatList } from 'native-base'
+import { Box, HStack, Text, FlatList, Fab } from 'native-base'
 import { useNavigation } from '@react-navigation/native'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -17,6 +17,7 @@ import InfoHeader from '../components/UIComponents/InfoHeader'
 import Loader from '../components/UIComponents/Loader'
 import TaskItem from '../components/TasksComponents/TaskItem'
 import { useFeedback } from '../hooks/useFeedback'
+import CreateNewItem from '../components/UIComponents/CreateNewItem'
 
 const RenderUserItem = memo(({ user }) => {
   return (
@@ -128,6 +129,7 @@ const ProjectInfoScreen = ({ route }) => {
       <InfoHeader title={project?.title} description={project?.description} />
       <UsersList />
       <ProjectTasks />
+      <CreateNewItem onPress={() => navigation.navigate('CreateNewTask')} />
     </Box>
   )
 }
